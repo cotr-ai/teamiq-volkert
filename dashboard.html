@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TeamIQ — Federal Teaming Intelligence | COTR.ai</title>
+<meta name="description" content="TeamIQ by COTR.ai — Federal Set-Aside Teaming Intelligence Platform. 8-factor weighted scoring for SB + LB + Opportunity triad matching.">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+  :root {
+    --navy-deep: #0B1120;
+    --navy: #0F172A;
+    --navy-light: #1E293B;
+    --slate: #334155;
+    --slate-light: #475569;
+    --gray: #64748B;
+    --gray-light: #94A3B8;
+    --white: #F8FAFC;
+    --teal: #0D9488;
+    --teal-dark: #0F766E;
+    --teal-light: #5EEAD4;
+    --teal-bg: #CCFBF1;
+    --green: #22C55E;
+    --green-light: #4ADE80;
+    --orange: #F97316;
+    --orange-light: #FB923C;
+    --red: #EF4444;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--navy-deep);
+    color: var(--white);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── HEADER ── */
+  .top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 40px;
+    background: rgba(15,23,42,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--slate);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .brand-group {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .brand-group img { height: 40px; }
+  .brand-group .divider {
+    width: 1.5px; height: 28px;
+    background: var(--slate);
+  }
+  .brand-group .module {
+    font-size: 20px; font-weight: 800;
+    color: var(--white);
+  }
+  .brand-group .module span { color: var(--teal); }
+  .nav-label {
+    font-size: 11px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--gray);
+  }
+  .cta-btn {
+    background: var(--teal);
+    color: #fff;
+    border: none;
+    padding: 10px 22px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+  }
+  .cta-btn:hover { background: var(--teal-dark); transform: translateY(-1px); }
+
+  /* ── HERO ── */
+  .hero {
+    text-align: center;
+    padding: 50px 40px 30px;
+  }
+  .hero h1 {
+    font-size: 36px; font-weight: 900;
+    letter-spacing: -1px;
+    margin-bottom: 10px;
+  }
+  .hero h1 span { color: var(--teal); }
+  .hero .subtitle {
+    font-size: 16px; color: var(--gray-light);
+    font-weight: 500; max-width: 600px; margin: 0 auto;
+  }
+  .hero .dodaf {
+    margin-top: 8px;
+    font-size: 10px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--gray);
+  }
+
+  /* ── CANVAS ── */
+  .canvas-wrap {
+    display: flex;
+    justify-content: center;
+    padding: 0 20px 20px;
+  }
+  .canvas {
+    position: relative;
+    width: 1060px;
+    height: 640px;
+  }
+
+  svg.connectors {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* Animated particles along paths */
+  @keyframes flowPulse {
+    0% { offset-distance: 0%; opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { offset-distance: 100%; opacity: 0; }
+  }
+  .particle {
+    position: absolute;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--teal-light);
+    box-shadow: 0 0 8px var(--teal);
+    z-index: 2;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* ── NODES ── */
+  .node {
+    position: absolute;
+    border-radius: 12px;
+    padding: 14px 16px;
+    z-index: 10;
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
+  .node:hover {
+    transform: scale(1.04);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    z-index: 20;
+  }
+  .node.active {
+    outline: 2px solid var(--teal-light);
+    outline-offset: 3px;
+  }
+  .node .icon { font-size: 22px; margin-bottom: 5px; }
+  .node .label { font-weight: 700; font-size: 12.5px; line-height: 1.2; }
+  .node .desc { font-size: 9.5px; line-height: 1.4; margin-top: 4px; opacity: 0.85; }
+
+  .node.source {
+    background: linear-gradient(135deg, #1E3A5F, var(--navy));
+    border: 1.5px solid var(--slate);
+    color: #CBD5E1;
+  }
+  .node.source .label { color: #E2E8F0; }
+
+  .node.intake {
+    background: linear-gradient(135deg, #164E63, var(--navy-deep));
+    border: 1.5px solid var(--teal);
+    color: var(--teal-bg);
+  }
+  .node.intake .label { color: var(--teal-light); }
+
+  .node.engine {
+    background: linear-gradient(135deg, var(--teal), var(--teal-dark));
+    border: 2px solid var(--teal-light);
+    color: #F0FDFA;
+    text-align: center;
+    box-shadow: 0 0 40px rgba(13,148,136,0.25);
+  }
+  .node.engine .label { color: #FFF; font-size: 15px; }
+
+  .node.output {
+    background: linear-gradient(135deg, #1A2744, var(--navy-deep));
+    border: 1.5px solid var(--teal-dark);
+    color: #CBD5E1;
+  }
+  .node.output .label { color: var(--teal-light); }
+
+  .node.outcome {
+    background: linear-gradient(135deg, #14532D, var(--navy-deep));
+    border: 1.5px solid var(--green);
+    color: #BBF7D0;
+  }
+  .node.outcome .label { color: var(--green-light); }
+
+  .node.unlock {
+    background: linear-gradient(135deg, #7C2D12, var(--navy-deep));
+    border: 1.5px solid var(--orange);
+    color: #FED7AA;
+  }
+  .node.unlock .label { color: var(--orange-light); }
+
+  /* ── PHASE LABELS ── */
+  .phase-label {
+    position: absolute;
+    font-size: 9px; font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--slate-light);
+    z-index: 3;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+  }
+
+  /* ── SCORING FACTORS (chips) ── */
+  .factors {
+    position: absolute;
+    z-index: 10;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px;
+    width: 210px;
+  }
+  .factor {
+    background: rgba(13,148,136,0.15);
+    border: 1px solid rgba(13,148,136,0.3);
+    border-radius: 4px;
+    padding: 2px 6px;
+    font-size: 8px;
+    color: var(--teal-light);
+    font-weight: 600;
+    white-space: nowrap;
+    cursor: help;
+    position: relative;
+    transition: all 0.2s;
+  }
+  .factor:hover {
+    background: rgba(13,148,136,0.35);
+    border-color: var(--teal-light);
+  }
+
+  /* ── TOOLTIPS ── */
+  .tooltip {
+    display: none;
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--navy);
+    border: 1px solid var(--teal);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 11px;
+    color: var(--gray-light);
+    width: 220px;
+    line-height: 1.5;
+    z-index: 50;
+    pointer-events: none;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+  }
+  .tooltip .tt-title {
+    color: var(--teal-light);
+    font-weight: 700;
+    font-size: 11px;
+    margin-bottom: 4px;
+  }
+  .factor:hover .tooltip { display: block; }
+
+  /* ── FLOW LABELS ── */
+  .flow-label {
+    position: absolute;
+    font-size: 8px; font-weight: 600;
+    color: var(--gray);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    z-index: 3;
+  }
+
+  /* ── SLIDE-OUT PANEL ── */
+  .panel-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 200;
+  }
+  .panel-overlay.open { display: block; }
+
+  .detail-panel {
+    position: fixed;
+    top: 0; right: -460px;
+    width: 460px;
+    height: 100vh;
+    background: var(--navy);
+    border-left: 1px solid var(--slate);
+    z-index: 300;
+    transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow-y: auto;
+    padding: 30px;
+  }
+  .detail-panel.open { right: 0; }
+
+  .panel-close {
+    position: absolute;
+    top: 16px; right: 16px;
+    background: none; border: 1px solid var(--slate);
+    color: var(--gray-light);
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+  }
+  .panel-close:hover { border-color: var(--teal); color: var(--teal-light); }
+
+  .panel-icon { font-size: 32px; margin-bottom: 12px; }
+  .panel-title {
+    font-size: 22px; font-weight: 800;
+    color: var(--white); margin-bottom: 6px;
+  }
+  .panel-subtitle {
+    font-size: 12px; color: var(--gray-light);
+    margin-bottom: 20px; line-height: 1.6;
+  }
+  .panel-section {
+    margin-bottom: 20px;
+  }
+  .panel-section h3 {
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--teal); margin-bottom: 10px;
+  }
+  .panel-section p, .panel-section li {
+    font-size: 13px; color: #CBD5E1;
+    line-height: 1.7;
+  }
+  .panel-section ul {
+    list-style: none; padding: 0;
+  }
+  .panel-section ul li {
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(51,65,85,0.5);
+  }
+  .panel-section ul li:last-child { border-bottom: none; }
+  .panel-section ul li::before {
+    content: "→ ";
+    color: var(--teal);
+    font-weight: 700;
+  }
+
+  /* ── SCORING DEMO ── */
+  .scoring-demo {
+    background: var(--navy-deep);
+    border: 1px solid var(--slate);
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 20px;
+  }
+  .scoring-demo h3 {
+    font-size: 13px; font-weight: 700;
+    color: var(--teal-light); margin-bottom: 16px;
+  }
+  .score-bar-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    gap: 10px;
+  }
+  .score-bar-label {
+    font-size: 10px; color: var(--gray-light);
+    width: 110px; flex-shrink: 0;
+    font-weight: 600;
+  }
+  .score-bar-track {
+    flex: 1;
+    height: 8px;
+    background: var(--navy-light);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .score-bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    width: 0%;
+  }
+  .score-bar-value {
+    font-size: 11px; font-weight: 700;
+    color: var(--teal-light);
+    width: 36px; text-align: right;
+  }
+  .composite-score {
+    text-align: center;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid var(--slate);
+  }
+  .composite-score .big-number {
+    font-size: 48px; font-weight: 900;
+    color: var(--teal-light);
+    line-height: 1;
+  }
+  .composite-score .big-label {
+    font-size: 11px; color: var(--gray);
+    letter-spacing: 1px; text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  /* ── OPPORTUNITY DOTS ── */
+  .opp-dot {
+    position: absolute;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--orange);
+    border: 2px solid var(--orange-light);
+    cursor: pointer;
+    z-index: 15;
+    transition: all 0.2s;
+  }
+  .opp-dot:hover {
+    transform: scale(1.5);
+    box-shadow: 0 0 12px var(--orange);
+  }
+  .opp-dot .opp-tooltip {
+    display: none;
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--navy);
+    border: 1px solid var(--orange);
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 10px;
+    color: #FED7AA;
+    width: 200px;
+    line-height: 1.4;
+    white-space: normal;
+    z-index: 50;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+  }
+  .opp-dot .opp-tooltip .opp-name { font-weight: 700; color: var(--orange-light); }
+  .opp-dot .opp-tooltip .opp-score { color: var(--teal-light); font-weight: 700; }
+  .opp-dot .opp-tooltip a { color: var(--teal-light); text-decoration: underline; }
+  .opp-dot:hover .opp-tooltip { display: block; }
+
+  /* ── WATERMARK ── */
+  .watermark {
+    position: absolute;
+    bottom: 6px; right: 16px;
+    font-size: 9px; color: var(--slate);
+    font-weight: 600; letter-spacing: 1px;
+    z-index: 3;
+  }
+
+  /* ── OPPORTUNITY SELECT ── */
+  .opp-select {
+    background: var(--navy-light);
+    border: 1px solid var(--slate);
+    color: var(--white);
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-family: 'Inter', sans-serif;
+    width: 100%;
+    cursor: pointer;
+    margin-bottom: 12px;
+  }
+  .opp-select:focus { outline: none; border-color: var(--teal); }
+
+  /* ── ANIMATE FLOW BUTTON ── */
+  .flow-btn {
+    position: absolute;
+    bottom: 12px; left: 16px;
+    background: var(--navy-light);
+    border: 1px solid var(--slate);
+    color: var(--gray-light);
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    z-index: 15;
+    transition: all 0.2s;
+  }
+  .flow-btn:hover { border-color: var(--teal); color: var(--teal-light); }
+
+  /* ── PULSE ANIMATION ── */
+  @keyframes nodePulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(13,148,136,0); }
+    50% { box-shadow: 0 0 0 8px rgba(13,148,136,0.15); }
+  }
+  .node.pulsing { animation: nodePulse 2s infinite; }
+</style>
+</head>
+<body>
+
+<!-- Top Bar -->
+<div class="top-bar">
+  <div class="brand-group">
+    <img src="data:image/png;base64,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" alt="COTR.ai"/>
+    <div class="divider"></div>
+    <div class="module">Team<span>IQ</span></div>
+  </div>
+  <div class="nav-label">DoDAF OV-1 &bull; Operational Concept</div>
+  <a href="mailto:chris@cotr.ai?subject=TeamIQ%20Teaming%20Assessment%20Request&body=I%27d%20like%20to%20schedule%20a%20full%20Teaming%20Readiness%20Assessment." class="cta-btn">Schedule Assessment →</a>
+</div>
+
+<!-- Hero -->
+<div class="hero">
+  <h1>Federal Teaming <span>Intelligence</span></h1>
+  <div class="subtitle">8-factor weighted scoring across every Small Business + Large Business + Opportunity combination — powered by COTR.ai</div>
+  <div class="dodaf">Click any node to explore &bull; Hover scoring factors for detail</div>
+</div>
+
+<!-- Canvas -->
+<div class="canvas-wrap">
+<div class="canvas">
+
+  <!-- SVG Connectors -->
+  <svg class="connectors" viewBox="0 0 1060 640">
+    <defs>
+      <marker id="arrow-teal" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+        <path d="M0,0 L8,3 L0,6" fill="#0D9488"/>
+      </marker>
+      <marker id="arrow-green" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+        <path d="M0,0 L8,3 L0,6" fill="#22C55E"/>
+      </marker>
+      <marker id="arrow-orange" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+        <path d="M0,0 L8,3 L0,6" fill="#F97316"/>
+      </marker>
+      <marker id="arrow-gray" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+        <path d="M0,0 L8,3 L0,6" fill="#475569"/>
+      </marker>
+
+      <!-- Animated particle paths -->
+      <path id="path-sam" d="M 195 80 Q 320 80, 460 215" fill="none"/>
+      <path id="path-sb" d="M 195 250 L 440 280" fill="none"/>
+      <path id="path-lb" d="M 195 410 L 440 320" fill="none"/>
+      <path id="path-out1" d="M 620 250 L 740 130" fill="none"/>
+      <path id="path-out2" d="M 620 290 L 740 270" fill="none"/>
+      <path id="path-out3" d="M 620 330 L 740 400" fill="none"/>
+    </defs>
+
+    <!-- SAM.gov → Engine -->
+    <path d="M 195 80 Q 320 80, 460 215" fill="none" stroke="#475569" stroke-width="1.5" stroke-dasharray="6,4" marker-end="url(#arrow-gray)" class="conn"/>
+    <!-- SB Intake → Engine -->
+    <path d="M 195 250 L 440 280" fill="none" stroke="#0D9488" stroke-width="1.8" marker-end="url(#arrow-teal)" class="conn"/>
+    <!-- LB Intake → Engine -->
+    <path d="M 195 410 L 440 320" fill="none" stroke="#0D9488" stroke-width="1.8" marker-end="url(#arrow-teal)" class="conn"/>
+    <!-- SB Direct → Engine -->
+    <path d="M 195 170 Q 300 200, 440 260" fill="none" stroke="#0D9488" stroke-width="1.2" stroke-dasharray="4,4" marker-end="url(#arrow-teal)" class="conn"/>
+    <!-- LB Direct → Engine -->
+    <path d="M 195 530 Q 300 470, 440 340" fill="none" stroke="#0D9488" stroke-width="1.2" stroke-dasharray="4,4" marker-end="url(#arrow-teal)" class="conn"/>
+    <!-- Engine → Scout Brief -->
+    <path d="M 620 250 L 740 130" fill="none" stroke="#0F766E" stroke-width="1.8" marker-end="url(#arrow-teal)" class="conn"/>
+    <!-- Engine → Match Scores -->
+    <path d="M 620 290 L 740 270" fill="none" stroke="#0F766E" stroke-width="1.8" marker-end="url(#arrow-teal)" class="conn"/>
+    <!-- Engine → Gap Analysis -->
+    <path d="M 620 330 L 740 400" fill="none" stroke="#0F766E" stroke-width="1.8" marker-end="url(#arrow-teal)" class="conn"/>
+    <!-- Outputs → Award -->
+    <path d="M 910 155 Q 960 200, 960 260" fill="none" stroke="#22C55E" stroke-width="1.5" marker-end="url(#arrow-green)" class="conn"/>
+    <path d="M 910 285 L 940 290" fill="none" stroke="#22C55E" stroke-width="1.5" marker-end="url(#arrow-green)" class="conn"/>
+    <path d="M 910 420 Q 960 380, 960 320" fill="none" stroke="#22C55E" stroke-width="1.5" marker-end="url(#arrow-green)" class="conn"/>
+    <!-- Engine → Sole Source -->
+    <path d="M 560 365 L 560 460" fill="none" stroke="#F97316" stroke-width="1.8" stroke-dasharray="6,3" marker-end="url(#arrow-orange)" class="conn"/>
+    <path d="M 490 480 Q 400 440, 440 350" fill="none" stroke="#F97316" stroke-width="1" stroke-dasharray="3,3" marker-end="url(#arrow-orange)" class="conn"/>
+
+    <!-- Animated particles -->
+    <circle r="4" fill="#5EEAD4" opacity="0" class="svg-particle">
+      <animateMotion dur="2.5s" repeatCount="indefinite" begin="0s" keyPoints="0;1" keyTimes="0;1" calcMode="linear">
+        <mpath href="#path-sam"/>
+      </animateMotion>
+      <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.1;0.8;1" dur="2.5s" repeatCount="indefinite"/>
+    </circle>
+    <circle r="4" fill="#5EEAD4" opacity="0" class="svg-particle">
+      <animateMotion dur="2s" repeatCount="indefinite" begin="0.4s" keyPoints="0;1" keyTimes="0;1" calcMode="linear">
+        <mpath href="#path-sb"/>
+      </animateMotion>
+      <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.1;0.8;1" dur="2s" repeatCount="indefinite"/>
+    </circle>
+    <circle r="4" fill="#5EEAD4" opacity="0" class="svg-particle">
+      <animateMotion dur="2s" repeatCount="indefinite" begin="0.8s" keyPoints="0;1" keyTimes="0;1" calcMode="linear">
+        <mpath href="#path-lb"/>
+      </animateMotion>
+      <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.1;0.8;1" dur="2s" repeatCount="indefinite"/>
+    </circle>
+    <circle r="3" fill="#0F766E" opacity="0" class="svg-particle">
+      <animateMotion dur="1.5s" repeatCount="indefinite" begin="1.2s" keyPoints="0;1" keyTimes="0;1" calcMode="linear">
+        <mpath href="#path-out1"/>
+      </animateMotion>
+      <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.1;0.8;1" dur="1.5s" repeatCount="indefinite"/>
+    </circle>
+    <circle r="3" fill="#0F766E" opacity="0" class="svg-particle">
+      <animateMotion dur="1.5s" repeatCount="indefinite" begin="1.6s" keyPoints="0;1" keyTimes="0;1" calcMode="linear">
+        <mpath href="#path-out2"/>
+      </animateMotion>
+      <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.1;0.8;1" dur="1.5s" repeatCount="indefinite"/>
+    </circle>
+    <circle r="3" fill="#0F766E" opacity="0" class="svg-particle">
+      <animateMotion dur="1.5s" repeatCount="indefinite" begin="2s" keyPoints="0;1" keyTimes="0;1" calcMode="linear">
+        <mpath href="#path-out3"/>
+      </animateMotion>
+      <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.1;0.8;1" dur="1.5s" repeatCount="indefinite"/>
+    </circle>
+  </svg>
+
+  <!-- Phase Labels -->
+  <div class="phase-label" style="left: 2px; top: 180px;">SOURCES</div>
+  <div class="phase-label" style="left: 410px; top: 220px;">PROCESSING</div>
+  <div class="phase-label" style="left: 720px; top: 200px;">OUTPUTS</div>
+  <div class="phase-label" style="left: 940px; top: 220px;">OUTCOME</div>
+
+  <!-- ── NODES ── -->
+
+  <div class="node source" style="left: 25px; top: 40px; width: 170px;" data-panel="samgov">
+    <div class="icon">🏛</div>
+    <div class="label">SAM.gov</div>
+    <div class="desc">Federal opportunity feed — solicitations, set-aside types, NAICS codes, deadlines</div>
+  </div>
+
+  <div class="node intake" style="left: 25px; top: 130px; width: 170px;" data-panel="sb-partner">
+    <div class="icon">🏢</div>
+    <div class="label">Small Business Partner</div>
+    <div class="desc">Certifications (8(a), SDVOSB, HUBZone), NAICS, past performance, clearances</div>
+  </div>
+
+  <div class="node intake" style="left: 25px; top: 250px; width: 170px;" data-panel="sb-intake">
+    <div class="icon">📋</div>
+    <div class="label">SB Intake Form</div>
+    <div class="desc">Structured data capture: set-aside eligibility, bonding, JV history, geographic reach</div>
+  </div>
+
+  <div class="node intake" style="left: 25px; top: 380px; width: 170px;" data-panel="lb-intake">
+    <div class="icon">📋</div>
+    <div class="label">LB Intake Form</div>
+    <div class="desc">Teaming capacity, SB utilization goals, contract vehicles, mentor-protege interest</div>
+  </div>
+
+  <div class="node intake" style="left: 25px; top: 500px; width: 170px;" data-panel="lb-partner">
+    <div class="icon">🏗</div>
+    <div class="label">Large Business Partner</div>
+    <div class="desc">Prime contract history, IDIQ vehicles, subcontracting plan, target set-asides</div>
+  </div>
+
+  <div class="node engine" style="left: 440px; top: 210px; width: 180px; height: 155px;" data-panel="engine">
+    <div class="icon">⚙️</div>
+    <div class="label">TeamIQ Engine</div>
+    <div class="desc" style="margin-top: 8px;">8-Factor Weighted<br/>Scoring Model<br/><br/>SB + LB + Opportunity<br/>Triad Matching</div>
+  </div>
+
+  <div class="node output" style="left: 740px; top: 95px; width: 170px;" data-panel="scout">
+    <div class="icon">📑</div>
+    <div class="label">Scout Brief</div>
+    <div class="desc">Client-ready pipeline diagnostic — scored opportunities, strengths, gaps, next steps</div>
+  </div>
+
+  <div class="node output" style="left: 740px; top: 235px; width: 170px;" data-panel="scores">
+    <div class="icon">🎯</div>
+    <div class="label">Teaming Match Scores</div>
+    <div class="desc">Ranked SB-LB pairings per opportunity — 0-100 composite score with factor breakdown</div>
+  </div>
+
+  <div class="node output" style="left: 740px; top: 370px; width: 170px;" data-panel="gaps">
+    <div class="icon">🔍</div>
+    <div class="label">Gap Analysis</div>
+    <div class="desc">Missing certifications, vehicles, clearances, and recommended actions to close gaps</div>
+  </div>
+
+  <div class="node outcome" style="left: 945px; top: 255px; width: 80px; text-align: center;" data-panel="award">
+    <div class="icon">✅</div>
+    <div class="label">Contract<br/>Award</div>
+  </div>
+
+  <div class="node unlock" style="left: 460px; top: 465px; width: 210px;" data-panel="solesource">
+    <div class="icon">🔓</div>
+    <div class="label">Sole-Source Unlock</div>
+    <div class="desc">Tribal 8(a) pathways, Mentor-Protege JVs, no-ceiling sole-source contracts</div>
+  </div>
+
+  <!-- Scoring factor chips with tooltips -->
+  <div class="factors" style="left: 425px; top: 375px;">
+    <span class="factor">SA Eligibility 25%
+      <div class="tooltip"><div class="tt-title">Set-Aside Eligibility (25%)</div>Does the SB hold the required certification for this opportunity's set-aside type? 8(a), SDVOSB, HUBZone, WOSB — exact match scores highest.</div>
+    </span>
+    <span class="factor">NAICS Align 20%
+      <div class="tooltip"><div class="tt-title">NAICS Alignment (20%)</div>How closely do the SB's registered NAICS codes match the opportunity's primary NAICS? Direct match vs. adjacent code scoring.</div>
+    </span>
+    <span class="factor">Geo Proximity 15%
+      <div class="tooltip"><div class="tt-title">Geographic Proximity (15%)</div>Physical distance between the SB and the work site. Closer proximity = lower mobilization cost, stronger local presence story.</div>
+    </span>
+    <span class="factor">Past Perf 15%
+      <div class="tooltip"><div class="tt-title">Past Performance (15%)</div>Relevant contract history on similar scope, scale, and agency. CPARS ratings and recency weighted.</div>
+    </span>
+    <span class="factor">Partner Cap 10%
+      <div class="tooltip"><div class="tt-title">Partner Capability (10%)</div>Does the LB bring the technical depth, clearances, bonding capacity, or equipment the SB lacks?</div>
+    </span>
+    <span class="factor">Vehicle Access 5%
+      <div class="tooltip"><div class="tt-title">Vehicle Access (5%)</div>Does either partner hold an existing IDIQ, MATOC, or BPA that could be leveraged for task order competition?</div>
+    </span>
+    <span class="factor">Sole-Source 5%
+      <div class="tooltip"><div class="tt-title">Sole-Source Eligible (5%)</div>Can this opportunity be pursued as a sole-source award through Tribal 8(a), directed SB set-aside, or other non-competitive pathways?</div>
+    </span>
+    <span class="factor">Team Ready 5%
+      <div class="tooltip"><div class="tt-title">Teaming Readiness (5%)</div>Do the partners have an existing relationship, teaming agreement, mentor-protege arrangement, or JV in place?</div>
+    </span>
+  </div>
+
+  <!-- Volkert Opportunity Dots -->
+  <div class="opp-dot" style="left: 728px; top: 95px;">
+    <div class="opp-tooltip"><span class="opp-name">Env. Remediation, Redstone Arsenal</span><br/>Score: <span class="opp-score">76/100</span> &bull; 8(a)<br/><a href="https://sam.gov/search/?keywords=W31P4Q20FB006P00057&index=opp" target="_blank">View on SAM.gov →</a></div>
+  </div>
+  <div class="opp-dot" style="left: 728px; top: 115px;">
+    <div class="opp-tooltip"><span class="opp-name">Civil Engineering Svcs, Ft. Liberty</span><br/>Score: <span class="opp-score">72/100</span> &bull; SDVOSB<br/><a href="https://sam.gov/search/?keywords=W912DY26RA009&index=opp" target="_blank">View on SAM.gov →</a></div>
+  </div>
+  <div class="opp-dot" style="left: 728px; top: 255px;">
+    <div class="opp-tooltip"><span class="opp-name">USACE Mobile District Infrastructure</span><br/>Score: <span class="opp-score">84/100</span> &bull; Tribal 8(a)<br/><a href="https://sam.gov/search/?keywords=W9127827RA002&index=opp" target="_blank">View on SAM.gov →</a></div>
+  </div>
+  <div class="opp-dot" style="left: 728px; top: 275px;">
+    <div class="opp-tooltip"><span class="opp-name">Stormwater Mgmt, Tyndall AFB</span><br/>Score: <span class="opp-score">69/100</span> &bull; SB Set-Aside<br/><a href="https://sam.gov/search/?keywords=FA890326R0011&index=opp" target="_blank">View on SAM.gov →</a></div>
+  </div>
+  <div class="opp-dot" style="left: 728px; top: 390px;">
+    <div class="opp-tooltip"><span class="opp-name">Highway Eng., FHWA Alabama</span><br/>Score: <span class="opp-score">88/100</span> &bull; Tribal 8(a)<br/><a href="https://sam.gov/search/?keywords=W9127826RA055&index=opp" target="_blank">View on SAM.gov →</a></div>
+  </div>
+
+  <!-- Flow Labels -->
+  <div class="flow-label" style="left: 270px; top: 55px;">Opportunity Feed</div>
+  <div class="flow-label" style="left: 280px; top: 235px;">SB Profile</div>
+  <div class="flow-label" style="left: 280px; top: 400px;">LB Profile</div>
+  <div class="flow-label" style="left: 655px; top: 160px;">Deliverables</div>
+  <div class="flow-label" style="left: 490px; top: 445px;">Unlock Path</div>
+
+  <div class="watermark">COTR.AI &bull; TeamIQ OV-1 &bull; April 2026</div>
+</div>
+</div>
+
+<!-- Panel Overlay -->
+<div class="panel-overlay" id="panelOverlay"></div>
+
+<!-- Detail Panel -->
+<div class="detail-panel" id="detailPanel">
+  <button class="panel-close" id="panelClose">&times;</button>
+  <div id="panelContent"></div>
+</div>
+
+<script>
+// Panel content definitions
+const panels = {
+  "samgov": {
+    icon: "🏛", title: "SAM.gov Opportunity Feed",
+    subtitle: "The TeamIQ engine continuously ingests federal contract opportunities from SAM.gov, filtering by NAICS codes, set-aside types, geographic regions, and agency alignment relevant to each client's profile.",
+    sections: [
+      { heading: "Data Points Captured", items: ["Solicitation number & title", "Set-aside type (8(a), SDVOSB, HUBZone, WOSB, etc.)", "Primary and secondary NAICS codes", "Estimated contract value", "Period of performance & response deadline", "Contracting agency & sub-agency", "Geographic location (state, installation, city)", "Contract type (FFP, T&M, CPFF, IDIQ)"] },
+      { heading: "Current Pipeline", text: "For Volkert, the engine has identified 10 active federal opportunities across DOD, USACE, and civilian agencies — with 54 FHWA contracts and $10M+ in prime contract history." }
+    ]
+  },
+  "sb-partner": {
+    icon: "🏢", title: "Small Business Partner",
+    subtitle: "Small businesses bring the set-aside certifications, sole-source eligibility, and SB utilization credit that large businesses need to compete on restricted procurements.",
+    sections: [
+      { heading: "Key Attributes Scored", items: ["Set-aside certifications held (8(a), Tribal 8(a), SDVOSB, HUBZone, WOSB, EDWOSB)", "Registered NAICS codes", "Geographic footprint & office locations", "Past performance (CPARS ratings, contract history)", "Security clearances held", "Bonding capacity", "Joint venture & mentor-protege history", "Technical capabilities & key personnel"] }
+    ]
+  },
+  "sb-intake": {
+    icon: "📋", title: "SB Intake Form",
+    subtitle: "A structured 8-section intake form captures everything the TeamIQ engine needs to score a small business partner against available opportunities.",
+    sections: [
+      { heading: "Form Sections", items: ["Company profile & contact information", "Set-aside certifications (with expiration dates)", "NAICS codes & PSC codes", "Geographic service area", "Past performance summary", "Bonding & insurance capacity", "Joint venture & teaming history", "What they need most from a large business partner"] },
+      { heading: "Fillable PDF", text: "Delivered as a branded, fillable PDF that partners complete digitally. Data flows directly into the TeamIQ scoring engine." }
+    ]
+  },
+  "lb-intake": {
+    icon: "📋", title: "LB Intake Form",
+    subtitle: "The large business intake captures teaming capacity, subcontracting goals, and the specific small business capabilities they need to win set-aside contracts.",
+    sections: [
+      { heading: "Form Sections", items: ["Company profile & prime contract vehicles", "SB subcontracting plan & utilization targets", "Set-aside types being pursued", "Sole-source interest & mentor-protege status", "NAICS alignment & geographic needs", "Past teaming arrangements", "Technical gaps requiring SB support", "What they need most from a small business partner"] }
+    ]
+  },
+  "lb-partner": {
+    icon: "🏗", title: "Large Business Partner",
+    subtitle: "Large businesses bring the prime contract history, IDIQ vehicles, technical depth, and bonding capacity. TeamIQ matches them with certified SBs that unlock set-aside opportunities they can't compete for alone.",
+    sections: [
+      { heading: "Key Attributes Scored", items: ["Prime contract history & IDIQ/MATOC vehicles", "SB subcontracting plan compliance", "Mentor-protege program participation", "Technical capabilities & cleared personnel", "Geographic presence & mobilization capacity", "Agency relationships & incumbent status"] },
+      { heading: "For Volkert", text: "Volkert holds $10M+ in FHWA prime contracts, demonstrated JV experience through Stantec-Volkert-JMT, and strong engineering capabilities across environmental, infrastructure, and transportation — making them an ideal large business teaming partner." }
+    ]
+  },
+  "engine": {
+    icon: "⚙️", title: "TeamIQ Scoring Engine",
+    subtitle: "The core of the platform — an 8-factor weighted scoring model that evaluates every possible SB + LB + Opportunity triad to surface the highest-value teaming combinations.",
+    sections: [
+      { heading: "How It Works", text: "For each opportunity in the pipeline, the engine scores every potential SB-LB pairing across 8 weighted factors. The composite score (0-100) determines teaming priority, and the factor breakdown reveals exactly where each pairing is strong or has gaps to close." }
+    ],
+    showScoring: true
+  },
+  "scout": {
+    icon: "📑", title: "Scout Brief",
+    subtitle: "A client-ready, one-page pipeline diagnostic that distills the engine's analysis into an actionable document — scored opportunities, strengths, capability gaps, and recommended next steps.",
+    sections: [
+      { heading: "What's Included", items: ["Executive summary with key pipeline metrics", "Top-scored opportunities with SAM.gov links", "Strength and gap analysis", "Sole-source opportunity callout", "Recommended next steps with priority actions", "8-factor scoring model visual breakdown"] },
+      { heading: "Delivery", text: "Formatted as a branded .docx document — professional enough to share directly with partners, BD leads, or executive sponsors." }
+    ]
+  },
+  "scores": {
+    icon: "🎯", title: "Teaming Match Scores",
+    subtitle: "Ranked pairings for every combination of SB partner, LB partner, and opportunity — each with a 0-100 composite score and full factor breakdown showing exactly why the match works (or doesn't).",
+    sections: [
+      { heading: "Score Components", items: ["Composite score (weighted average of all 8 factors)", "Individual factor scores with color-coded thresholds", "Rank position within the opportunity's candidate pool", "Confidence indicator based on data completeness", "Delta from top-scoring alternative pairing"] },
+      { heading: "Actionable Insights", text: "A score of 75+ indicates a strong teaming match. Scores between 50-74 identify pairings with addressable gaps. Below 50 flags fundamental misalignment — saving partners from pursuing dead-end teaming arrangements." }
+    ]
+  },
+  "gaps": {
+    icon: "🔍", title: "Gap Analysis",
+    subtitle: "For every scored pairing, the engine identifies exactly what's missing and what actions would close the gap — turning a 65-score into an 85.",
+    sections: [
+      { heading: "Common Gaps Identified", items: ["Missing set-aside certification for target opportunity", "No existing contract vehicle for the procuring agency", "Insufficient past performance on similar scope", "No mentor-protege or JV agreement in place", "Geographic distance from the work site", "Missing security clearances for classified work", "Bonding capacity below contract threshold"] },
+      { heading: "Remediation Paths", text: "Each gap comes with a specific remediation action — from initiating a Mentor-Protege Agreement to obtaining a specific NAICS registration to establishing a formal JV entity." }
+    ]
+  },
+  "award": {
+    icon: "✅", title: "Contract Award",
+    subtitle: "The end goal — winning federal contracts through optimized teaming. TeamIQ increases win probability by ensuring the right partners pursue the right opportunities with the right teaming structure.",
+    sections: [
+      { heading: "How TeamIQ Drives Awards", items: ["Surfaces opportunities partners would otherwise miss", "Pairs SBs and LBs for maximum competitive advantage", "Identifies sole-source pathways that bypass competition entirely", "Ensures compliance with set-aside requirements before pursuit", "Reduces BD cycle time by pre-qualifying teaming matches"] }
+    ]
+  },
+  "solesource": {
+    icon: "🔓", title: "Sole-Source Unlock",
+    subtitle: "The highest-leverage strategy in federal contracting — Tribal 8(a) sole-source awards with no dollar ceiling, bypassing full-and-open competition entirely.",
+    sections: [
+      { heading: "How It Works", items: ["Tribal 8(a) firms can receive sole-source contracts with no ceiling on value", "No competitive bidding required — direct award from the contracting officer", "The SBA must approve the sole-source, but the bar is achievable", "Mentor-Protege JVs allow large businesses to participate while the 8(a) firm holds the contract"] },
+      { heading: "For Volkert", text: "With the right Tribal 8(a) partner, Volkert can access sole-source contracts with no dollar ceiling — this is the single highest-leverage teaming strategy available in federal contracting. The engine has identified 3 opportunities where this pathway is immediately viable." },
+      { heading: "Why This Matters", text: "A single Tribal 8(a) sole-source award can be worth more than winning 5 competitive procurements — with a fraction of the BD cost and timeline." }
+    ]
+  }
+};
+
+// Scoring demo data
+const scoringOpps = [
+  { name: "Env. Remediation, Redstone Arsenal", sa: 85, naics: 80, geo: 70, perf: 65, partner: 80, vehicle: 50, sole: 90, ready: 60, composite: 76 },
+  { name: "Civil Engineering Svcs, Ft. Liberty", sa: 90, naics: 75, geo: 55, perf: 60, partner: 85, vehicle: 40, sole: 80, ready: 55, composite: 72 },
+  { name: "USACE Mobile District Infrastructure", sa: 95, naics: 85, geo: 80, perf: 75, partner: 90, vehicle: 60, sole: 95, ready: 70, composite: 84 },
+  { name: "Stormwater Mgmt, Tyndall AFB", sa: 75, naics: 70, geo: 60, perf: 55, partner: 80, vehicle: 45, sole: 85, ready: 50, composite: 69 },
+  { name: "Highway Eng., FHWA Alabama", sa: 95, naics: 90, geo: 85, perf: 80, partner: 95, vehicle: 70, sole: 95, ready: 75, composite: 88 }
+];
+
+// Panel logic
+const overlay = document.getElementById('panelOverlay');
+const panel = document.getElementById('detailPanel');
+const panelContent = document.getElementById('panelContent');
+const panelClose = document.getElementById('panelClose');
+
+document.querySelectorAll('.node[data-panel]').forEach(node => {
+  node.addEventListener('click', () => {
+    const key = node.dataset.panel;
+    const data = panels[key];
+    if (!data) return;
+
+    let html = `<div class="panel-icon">${data.icon}</div>`;
+    html += `<div class="panel-title">${data.title}</div>`;
+    html += `<div class="panel-subtitle">${data.subtitle}</div>`;
+
+    data.sections.forEach(s => {
+      html += `<div class="panel-section"><h3>${s.heading}</h3>`;
+      if (s.items) {
+        html += '<ul>' + s.items.map(i => `<li>${i}</li>`).join('') + '</ul>';
+      }
+      if (s.text) {
+        html += `<p>${s.text}</p>`;
+      }
+      html += '</div>';
+    });
+
+    if (data.showScoring) {
+      html += buildScoringDemo();
+    }
+
+    panelContent.innerHTML = html;
+    overlay.classList.add('open');
+    panel.classList.add('open');
+
+    // Remove active from all nodes, add to this one
+    document.querySelectorAll('.node').forEach(n => n.classList.remove('active'));
+    node.classList.add('active');
+
+    // If scoring demo, wire up the dropdown
+    if (data.showScoring) {
+      const select = document.getElementById('oppSelect');
+      if (select) {
+        select.addEventListener('change', () => animateScores(parseInt(select.value)));
+        setTimeout(() => animateScores(0), 300);
+      }
+    }
+  });
+});
+
+function closePanel() {
+  overlay.classList.remove('open');
+  panel.classList.remove('open');
+  document.querySelectorAll('.node').forEach(n => n.classList.remove('active'));
+}
+overlay.addEventListener('click', closePanel);
+panelClose.addEventListener('click', closePanel);
+
+function buildScoringDemo() {
+  let html = '<div class="scoring-demo">';
+  html += '<h3>Live Scoring Demo</h3>';
+  html += '<select class="opp-select" id="oppSelect">';
+  scoringOpps.forEach((o, i) => {
+    html += `<option value="${i}">${o.name}</option>`;
+  });
+  html += '</select>';
+
+  const factors = ['sa', 'naics', 'geo', 'perf', 'partner', 'vehicle', 'sole', 'ready'];
+  const labels = ['SA Eligibility', 'NAICS Align', 'Geo Proximity', 'Past Performance', 'Partner Cap', 'Vehicle Access', 'Sole-Source', 'Team Readiness'];
+
+  factors.forEach((f, i) => {
+    html += `<div class="score-bar-row">
+      <div class="score-bar-label">${labels[i]}</div>
+      <div class="score-bar-track"><div class="score-bar-fill" id="bar-${f}" style="background: var(--teal);"></div></div>
+      <div class="score-bar-value" id="val-${f}">—</div>
+    </div>`;
+  });
+
+  html += `<div class="composite-score">
+    <div class="big-number" id="compositeNum">—</div>
+    <div class="big-label">Composite Score</div>
+  </div>`;
+  html += '</div>';
+  return html;
+}
+
+function animateScores(idx) {
+  const opp = scoringOpps[idx];
+  const factors = ['sa', 'naics', 'geo', 'perf', 'partner', 'vehicle', 'sole', 'ready'];
+
+  factors.forEach((f, i) => {
+    const bar = document.getElementById(`bar-${f}`);
+    const val = document.getElementById(`val-${f}`);
+    if (!bar || !val) return;
+
+    const score = opp[f];
+    // Color based on score
+    let color = '#EF4444'; // red
+    if (score >= 80) color = '#0D9488'; // teal
+    else if (score >= 60) color = '#F97316'; // orange
+    else if (score >= 40) color = '#EAB308'; // yellow
+
+    setTimeout(() => {
+      bar.style.width = score + '%';
+      bar.style.background = color;
+      val.textContent = score;
+      val.style.color = color;
+    }, i * 80);
+  });
+
+  setTimeout(() => {
+    const comp = document.getElementById('compositeNum');
+    if (comp) {
+      comp.textContent = opp.composite;
+      comp.style.color = opp.composite >= 80 ? '#5EEAD4' : opp.composite >= 60 ? '#FB923C' : '#EF4444';
+    }
+  }, 700);
+}
+</script>
+
+</body>
+</html>
