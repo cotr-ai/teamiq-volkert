@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TeamIQ Paid Pilot — COTR.ai</title>
+<meta name="description" content="TeamIQ Paid Pilot by COTR.ai — Full pipeline scoring, Scout Brief delivery, and teaming recommendations in 2 weeks.">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+  :root {
+    --navy-deep: #0B1120;
+    --navy: #0F172A;
+    --navy-light: #1E293B;
+    --slate: #334155;
+    --slate-light: #475569;
+    --gray: #64748B;
+    --gray-light: #94A3B8;
+    --white: #F8FAFC;
+    --teal: #0D9488;
+    --teal-dark: #0F766E;
+    --teal-light: #5EEAD4;
+    --teal-bg: #CCFBF1;
+    --green: #22C55E;
+    --green-light: #4ADE80;
+    --orange: #F97316;
+    --orange-light: #FB923C;
+    --red: #EF4444;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--navy-deep);
+    color: var(--white);
+    min-height: 100vh;
+  }
+
+  /* ── NAV ── */
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 48px;
+    border-bottom: 1px solid var(--slate);
+    background: rgba(15,23,42,0.95);
+    backdrop-filter: blur(12px);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: var(--white);
+  }
+  .nav-brand img { height: 36px; }
+  .nav-brand .divider { width: 1px; height: 24px; background: var(--slate); }
+  .nav-brand .name { font-size: 18px; font-weight: 800; }
+  .nav-brand .name span { color: var(--teal); }
+  nav a.cta {
+    background: var(--teal);
+    color: #fff;
+    padding: 10px 24px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  nav a.cta:hover { background: var(--teal-dark); transform: translateY(-1px); }
+
+  /* ── HERO ── */
+  .hero {
+    text-align: center;
+    padding: 80px 40px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -200px; left: 50%;
+    transform: translateX(-50%);
+    width: 800px; height: 800px;
+    background: radial-gradient(circle, rgba(13,148,136,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero .eyebrow {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--teal);
+    font-weight: 700;
+    margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-size: 48px;
+    font-weight: 900;
+    letter-spacing: -2px;
+    line-height: 1.1;
+    margin-bottom: 20px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .hero h1 span { color: var(--teal); }
+  .hero p {
+    font-size: 17px;
+    color: var(--gray-light);
+    max-width: 600px;
+    line-height: 1.7;
+    margin: 0 auto;
+  }
+
+  /* ── SECTION SHARED ── */
+  .section {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 60px 40px;
+  }
+  .section-label {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--teal);
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+  .section h2 {
+    font-size: 32px;
+    font-weight: 800;
+    margin-bottom: 16px;
+    letter-spacing: -1px;
+  }
+  .section .lead {
+    font-size: 15px;
+    color: var(--gray-light);
+    line-height: 1.7;
+    max-width: 640px;
+    margin-bottom: 40px;
+  }
+
+  /* ── TIMELINE ── */
+  .timeline {
+    position: relative;
+    padding-left: 40px;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 15px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--teal), var(--green));
+    border-radius: 2px;
+  }
+  .timeline-step {
+    position: relative;
+    margin-bottom: 36px;
+    padding: 20px 24px;
+    background: var(--navy);
+    border: 1px solid var(--slate);
+    border-radius: 12px;
+    transition: all 0.3s;
+    cursor: default;
+  }
+  .timeline-step:hover {
+    border-color: var(--teal);
+    box-shadow: 0 8px 32px rgba(13,148,136,0.1);
+    transform: translateX(4px);
+  }
+  .timeline-step::before {
+    content: '';
+    position: absolute;
+    left: -33px;
+    top: 24px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--teal);
+    border: 3px solid var(--navy-deep);
+    box-shadow: 0 0 12px rgba(13,148,136,0.4);
+  }
+  .step-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+  .step-day {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--teal-light);
+    background: rgba(13,148,136,0.15);
+    padding: 3px 10px;
+    border-radius: 4px;
+  }
+  .step-title {
+    font-size: 16px;
+    font-weight: 700;
+  }
+  .step-desc {
+    font-size: 13px;
+    color: var(--gray-light);
+    line-height: 1.7;
+  }
+
+  /* ── DELIVERABLES ── */
+  .deliverables-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+  }
+  .deliverable {
+    background: var(--navy);
+    border: 1px solid var(--slate);
+    border-radius: 12px;
+    padding: 24px;
+    transition: all 0.3s;
+  }
+  .deliverable:hover {
+    border-color: var(--teal);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(13,148,136,0.1);
+  }
+  .deliverable .d-icon {
+    font-size: 28px;
+    margin-bottom: 12px;
+  }
+  .deliverable h3 {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .deliverable p {
+    font-size: 12px;
+    color: var(--gray-light);
+    line-height: 1.6;
+  }
+
+  /* ── FAQ ── */
+  .faq-item {
+    border: 1px solid var(--slate);
+    border-radius: 10px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    transition: border-color 0.3s;
+  }
+  .faq-item:hover { border-color: var(--slate-light); }
+  .faq-item.open { border-color: var(--teal); }
+  .faq-q {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 24px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    background: var(--navy);
+    transition: background 0.2s;
+    user-select: none;
+  }
+  .faq-q:hover { background: var(--navy-light); }
+  .faq-q .arrow {
+    font-size: 18px;
+    color: var(--gray);
+    transition: transform 0.3s;
+  }
+  .faq-item.open .faq-q .arrow { transform: rotate(180deg); color: var(--teal-light); }
+  .faq-a {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease, padding 0.35s ease;
+    padding: 0 24px;
+    font-size: 13px;
+    color: var(--gray-light);
+    line-height: 1.7;
+    background: var(--navy);
+  }
+  .faq-item.open .faq-a {
+    max-height: 300px;
+    padding: 0 24px 20px;
+  }
+
+  /* ── CTA BANNER ── */
+  .cta-banner {
+    text-align: center;
+    padding: 80px 40px;
+    position: relative;
+  }
+  .cta-banner::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 600px; height: 400px;
+    background: radial-gradient(circle, rgba(13,148,136,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .cta-banner h2 {
+    font-size: 36px;
+    font-weight: 900;
+    letter-spacing: -1px;
+    margin-bottom: 12px;
+  }
+  .cta-banner h2 span { color: var(--teal); }
+  .cta-banner p {
+    font-size: 15px;
+    color: var(--gray-light);
+    max-width: 480px;
+    margin: 0 auto 32px;
+    line-height: 1.7;
+  }
+  .cta-banner .btn-primary {
+    display: inline-block;
+    background: var(--teal);
+    color: #fff;
+    padding: 14px 36px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.2s;
+    margin-right: 12px;
+  }
+  .cta-banner .btn-primary:hover { background: var(--teal-dark); transform: translateY(-2px); }
+  .cta-banner .btn-secondary {
+    display: inline-block;
+    border: 1.5px solid var(--slate);
+    color: var(--gray-light);
+    padding: 13px 32px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .cta-banner .btn-secondary:hover { border-color: var(--teal); color: var(--teal-light); }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 24px;
+    border-top: 1px solid var(--slate);
+    font-size: 11px;
+    color: var(--gray);
+  }
+  footer a { color: var(--teal); text-decoration: none; }
+
+  /* ── DIVIDER ── */
+  .divider-line {
+    max-width: 960px;
+    margin: 0 auto;
+    border: none;
+    border-top: 1px solid var(--slate);
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-brand">
+    <img src="data:image/png;base64,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" alt="COTR.ai"/>
+    <div class="divider"></div>
+    <div class="name">Team<span>IQ</span></div>
+  </a>
+  <a href="mailto:chris@cotr.ai?subject=TeamIQ%20Pilot%20Inquiry&body=I'd%20like%20to%20learn%20more%20about%20the%20TeamIQ%20paid%20pilot." class="cta">Start a Pilot →</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="eyebrow">Paid Pilot Program</div>
+  <h1>Full pipeline intelligence in <span>2 weeks</span></h1>
+  <p>One client, one focused engagement. We score your entire federal opportunity pipeline, deliver a professional Scout Brief, and provide actionable teaming recommendations — so you can start winning faster.</p>
+</div>
+
+<hr class="divider-line">
+
+<!-- TIMELINE -->
+<div class="section">
+  <div class="section-label">How It Works</div>
+  <h2>From kickoff to deliverables in 14 days</h2>
+  <div class="lead">Every pilot follows a structured, repeatable process. Here's what happens after you sign on.</div>
+
+  <div class="timeline">
+    <div class="timeline-step">
+      <div class="step-header">
+        <span class="step-day">Days 1–2</span>
+        <span class="step-title">Kickoff & Data Collection</span>
+      </div>
+      <div class="step-desc">We send you the SB and LB intake forms, collect your company profile, certifications, NAICS codes, past performance, and teaming interests. We also pull your active SAM.gov opportunity pipeline.</div>
+    </div>
+
+    <div class="timeline-step">
+      <div class="step-header">
+        <span class="step-day">Days 3–5</span>
+        <span class="step-title">Engine Ingestion & Scoring</span>
+      </div>
+      <div class="step-desc">Your data enters the TeamIQ scoring engine. Every SB + LB + Opportunity triad gets evaluated across all 8 weighted factors — set-aside eligibility, NAICS alignment, geographic proximity, past performance, partner capability, vehicle access, sole-source eligibility, and teaming readiness.</div>
+    </div>
+
+    <div class="timeline-step">
+      <div class="step-header">
+        <span class="step-day">Days 6–9</span>
+        <span class="step-title">Analysis & Gap Identification</span>
+      </div>
+      <div class="step-desc">We analyze the scored results, identify the highest-value teaming combinations, flag missing certifications or vehicles, and map sole-source pathways — including Tribal 8(a) opportunities with no dollar ceiling.</div>
+    </div>
+
+    <div class="timeline-step">
+      <div class="step-header">
+        <span class="step-day">Days 10–12</span>
+        <span class="step-title">Scout Brief Production</span>
+      </div>
+      <div class="step-desc">The Scout Brief is assembled — a professional, branded document with executive summary, scored opportunities, strength/gap analysis, sole-source callouts, and prioritized next steps. Ready to share with partners, BD leads, or executive sponsors.</div>
+    </div>
+
+    <div class="timeline-step">
+      <div class="step-header">
+        <span class="step-day">Days 13–14</span>
+        <span class="step-title">Delivery & Strategy Session</span>
+      </div>
+      <div class="step-desc">You receive the Scout Brief plus full match score exports. We walk through the findings in a 60-minute strategy call — covering top opportunities, recommended teaming pairings, and immediate actions to increase win probability.</div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider-line">
+
+<!-- DELIVERABLES -->
+<div class="section">
+  <div class="section-label">What You Get</div>
+  <h2>Pilot deliverables</h2>
+  <div class="lead">Everything you need to make informed teaming decisions — backed by data, not guesswork.</div>
+
+  <div class="deliverables-grid">
+    <div class="deliverable">
+      <div class="d-icon">📑</div>
+      <h3>Scout Brief</h3>
+      <p>Professional pipeline diagnostic — scored opportunities, strengths, gaps, sole-source pathways, and prioritized next steps. Formatted for executive distribution.</p>
+    </div>
+    <div class="deliverable">
+      <div class="d-icon">🎯</div>
+      <h3>Match Score Export</h3>
+      <p>Full 8-factor scoring breakdown for every SB-LB-Opportunity triad. Filter, sort, and prioritize by composite score, individual factor, or opportunity type.</p>
+    </div>
+    <div class="deliverable">
+      <div class="d-icon">🔍</div>
+      <h3>Gap Analysis</h3>
+      <p>Specific remediation actions for each gap — from initiating Mentor-Protege agreements to obtaining NAICS registrations to establishing formal JV entities.</p>
+    </div>
+    <div class="deliverable">
+      <div class="d-icon">🔓</div>
+      <h3>Sole-Source Map</h3>
+      <p>Tribal 8(a) pathways, directed set-asides, and non-competitive opportunities identified — the highest-leverage strategy in federal contracting.</p>
+    </div>
+    <div class="deliverable">
+      <div class="d-icon">📞</div>
+      <h3>Strategy Session</h3>
+      <p>60-minute walkthrough of findings with COTR.ai leadership. Top opportunities, recommended partners, and an action plan you can execute immediately.</p>
+    </div>
+    <div class="deliverable">
+      <div class="d-icon">🔄</div>
+      <h3>Pipeline Refresh</h3>
+      <p>One additional SAM.gov pull and re-score included within 30 days of delivery — because the federal pipeline moves fast and your data should too.</p>
+    </div>
+  </div>
+</div>
+
+<hr class="divider-line">
+
+<!-- FAQ -->
+<div class="section">
+  <div class="section-label">Frequently Asked</div>
+  <h2>Common questions</h2>
+  <div class="lead">Everything we hear from new clients before they sign on.</div>
+
+  <div class="faq-item">
+    <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+      <span>What size company is the pilot designed for?</span>
+      <span class="arrow">▾</span>
+    </div>
+    <div class="faq-a">TeamIQ works for both small businesses looking to partner with large primes, and large businesses seeking certified SB teaming partners. The pilot is designed for one client entity — either an SB or LB — and scores their full opportunity pipeline against potential partners.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+      <span>What data do you need from us to get started?</span>
+      <span class="arrow">▾</span>
+    </div>
+    <div class="faq-a">We need your completed intake form (provided at kickoff), which covers company profile, set-aside certifications, NAICS codes, geographic service areas, past performance summary, bonding capacity, and teaming history. The form takes about 20 minutes to complete and feeds directly into the scoring engine.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+      <span>How is the composite score calculated?</span>
+      <span class="arrow">▾</span>
+    </div>
+    <div class="faq-a">The composite score (0–100) is a weighted average of 8 factors: Set-Aside Eligibility (25%), NAICS Alignment (20%), Geographic Proximity (15%), Past Performance (15%), Partner Capability (10%), Vehicle Access (5%), Sole-Source Eligible (5%), and Teaming Readiness (5%). Each factor is scored independently, and the weights reflect real-world impact on win probability.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+      <span>What happens after the pilot is complete?</span>
+      <span class="arrow">▾</span>
+    </div>
+    <div class="faq-a">Most clients move to a recurring engagement — monthly SAM.gov pulls, continuous pipeline scoring, and updated Scout Briefs as new opportunities appear. The pilot is designed to demonstrate value quickly so you can make an informed decision about ongoing service.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+      <span>Can I share the Scout Brief with partners?</span>
+      <span class="arrow">▾</span>
+    </div>
+    <div class="faq-a">Absolutely. The Scout Brief is formatted as a professional, branded document specifically designed to be shared with teaming partners, BD leads, and executive decision-makers. It's your document — use it however serves your business development strategy.</div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-banner">
+  <h2>Ready to see your <span>pipeline scored</span>?</h2>
+  <p>Start with a focused pilot — one client, full scoring, actionable results in 2 weeks. No long-term commitment required.</p>
+  <a href="mailto:chris@cotr.ai?subject=TeamIQ%20Pilot%20Inquiry&body=I'd%20like%20to%20learn%20more%20about%20the%20TeamIQ%20paid%20pilot.%0A%0ACompany%20Name%3A%20%0AContact%20Name%3A%20%0APhone%3A%20%0A%0ABriefly%20describe%20your%20federal%20contracting%20goals%3A%0A" class="btn-primary">Start a Pilot →</a>
+  <a href="index.html" class="btn-secondary">← Back to TeamIQ</a>
+</div>
+
+<footer>
+  &copy; 2026 <a href="https://cotr.ai">COTR.ai</a> &bull; Federal Teaming Intelligence &bull; <a href="mailto:chris@cotr.ai">chris@cotr.ai</a>
+</footer>
+
+</body>
+</html>

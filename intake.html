@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TeamIQ Partner Intake — COTR.ai</title>
+<meta name="description" content="Submit your company profile to COTR.ai's TeamIQ scoring engine — certifications, NAICS codes, past performance, and teaming interests.">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+  :root {
+    --navy-deep: #0B1120;
+    --navy: #0F172A;
+    --navy-light: #1E293B;
+    --slate: #334155;
+    --slate-light: #475569;
+    --gray: #64748B;
+    --gray-light: #94A3B8;
+    --white: #F8FAFC;
+    --teal: #0D9488;
+    --teal-dark: #0F766E;
+    --teal-light: #5EEAD4;
+    --teal-bg: #CCFBF1;
+    --green: #22C55E;
+    --green-light: #4ADE80;
+    --orange: #F97316;
+    --orange-light: #FB923C;
+    --red: #EF4444;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--navy-deep);
+    color: var(--white);
+    min-height: 100vh;
+  }
+
+  /* ── NAV ── */
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 48px;
+    border-bottom: 1px solid var(--slate);
+    background: rgba(15,23,42,0.95);
+    backdrop-filter: blur(12px);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: var(--white);
+  }
+  .nav-brand img { height: 36px; }
+  .nav-brand .divider { width: 1px; height: 24px; background: var(--slate); }
+  .nav-brand .name { font-size: 18px; font-weight: 800; }
+  .nav-brand .name span { color: var(--teal); }
+  nav a.cta {
+    background: var(--teal);
+    color: #fff;
+    padding: 10px 24px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  nav a.cta:hover { background: var(--teal-dark); transform: translateY(-1px); }
+
+  /* ── HERO ── */
+  .hero {
+    text-align: center;
+    padding: 80px 40px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -200px; left: 50%;
+    transform: translateX(-50%);
+    width: 800px; height: 800px;
+    background: radial-gradient(circle, rgba(13,148,136,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero .eyebrow {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--teal);
+    font-weight: 700;
+    margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-size: 48px;
+    font-weight: 900;
+    letter-spacing: -2px;
+    line-height: 1.1;
+    margin-bottom: 20px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .hero h1 span { color: var(--teal); }
+  .hero p {
+    font-size: 17px;
+    color: var(--gray-light);
+    max-width: 600px;
+    line-height: 1.7;
+    margin: 0 auto;
+  }
+
+  /* ── FORM CONTAINER ── */
+  .form-wrap {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 40px 40px 80px;
+  }
+
+  /* ── FORM SECTIONS ── */
+  .form-section {
+    margin-bottom: 40px;
+  }
+  .form-section-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--slate);
+  }
+  .form-section-num {
+    width: 28px;
+    height: 28px;
+    background: var(--teal);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 800;
+    color: #fff;
+    flex-shrink: 0;
+  }
+  .form-section-title {
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  /* ── FORM ELEMENTS ── */
+  .field {
+    margin-bottom: 16px;
+  }
+  .field label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--gray-light);
+    margin-bottom: 6px;
+    letter-spacing: 0.3px;
+  }
+  .field label .req {
+    color: var(--orange);
+    margin-left: 2px;
+  }
+  .field input[type="text"],
+  .field input[type="email"],
+  .field input[type="tel"],
+  .field input[type="url"],
+  .field textarea,
+  .field select {
+    width: 100%;
+    padding: 12px 14px;
+    background: var(--navy);
+    border: 1.5px solid var(--slate);
+    border-radius: 8px;
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    transition: border-color 0.2s;
+    outline: none;
+  }
+  .field input:focus,
+  .field textarea:focus,
+  .field select:focus {
+    border-color: var(--teal);
+    box-shadow: 0 0 0 3px rgba(13,148,136,0.15);
+  }
+  .field input::placeholder,
+  .field textarea::placeholder {
+    color: var(--slate-light);
+  }
+  .field textarea {
+    min-height: 100px;
+    resize: vertical;
+    line-height: 1.6;
+  }
+  .field select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%2394A3B8'%3E%3Cpath d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 36px;
+  }
+  .field select option {
+    background: var(--navy);
+    color: var(--white);
+  }
+  .field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  /* ── CHECKBOXES ── */
+  .checkbox-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    background: var(--navy);
+    border: 1.5px solid var(--slate);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    user-select: none;
+  }
+  .checkbox-item:hover {
+    border-color: var(--slate-light);
+    background: var(--navy-light);
+  }
+  .checkbox-item.checked {
+    border-color: var(--teal);
+    background: rgba(13,148,136,0.1);
+  }
+  .checkbox-item input[type="checkbox"] {
+    display: none;
+  }
+  .check-box {
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--slate-light);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.2s;
+  }
+  .checkbox-item.checked .check-box {
+    background: var(--teal);
+    border-color: var(--teal);
+  }
+  .check-box::after {
+    content: '';
+    width: 10px;
+    height: 6px;
+    border-left: 2px solid #fff;
+    border-bottom: 2px solid #fff;
+    transform: rotate(-45deg) translateY(-1px);
+    opacity: 0;
+    transition: opacity 0.15s;
+  }
+  .checkbox-item.checked .check-box::after {
+    opacity: 1;
+  }
+  .check-label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--gray-light);
+  }
+  .checkbox-item.checked .check-label {
+    color: var(--teal-light);
+  }
+
+  /* ── NAICS TAGS ── */
+  .naics-input-wrap {
+    display: flex;
+    gap: 8px;
+  }
+  .naics-input-wrap input {
+    flex: 1;
+  }
+  .naics-add-btn {
+    background: var(--teal);
+    color: #fff;
+    border: none;
+    padding: 12px 18px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .naics-add-btn:hover { background: var(--teal-dark); }
+  .naics-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 8px;
+    min-height: 24px;
+  }
+  .naics-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(13,148,136,0.15);
+    border: 1px solid rgba(13,148,136,0.3);
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 12px;
+    color: var(--teal-light);
+    font-weight: 600;
+  }
+  .naics-tag .remove {
+    cursor: pointer;
+    font-size: 14px;
+    color: var(--gray);
+    transition: color 0.2s;
+    line-height: 1;
+  }
+  .naics-tag .remove:hover { color: var(--red); }
+
+  /* ── SUBMIT ── */
+  .submit-section {
+    text-align: center;
+    padding: 40px 0 20px;
+    border-top: 1px solid var(--slate);
+  }
+  .submit-btn {
+    display: inline-block;
+    background: var(--teal);
+    color: #fff;
+    padding: 16px 48px;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 700;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.5px;
+  }
+  .submit-btn:hover { background: var(--teal-dark); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(13,148,136,0.2); }
+  .submit-note {
+    font-size: 12px;
+    color: var(--gray);
+    margin-top: 12px;
+    line-height: 1.5;
+  }
+
+  /* ── SUCCESS OVERLAY ── */
+  .success-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(11,17,32,0.92);
+    z-index: 500;
+    align-items: center;
+    justify-content: center;
+  }
+  .success-overlay.show {
+    display: flex;
+  }
+  .success-card {
+    background: var(--navy);
+    border: 2px solid var(--teal);
+    border-radius: 16px;
+    padding: 48px;
+    text-align: center;
+    max-width: 440px;
+    box-shadow: 0 24px 64px rgba(0,0,0,0.5);
+  }
+  .success-card .s-icon { font-size: 48px; margin-bottom: 16px; }
+  .success-card h2 {
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 12px;
+  }
+  .success-card p {
+    font-size: 14px;
+    color: var(--gray-light);
+    line-height: 1.7;
+    margin-bottom: 28px;
+  }
+  .success-card a {
+    display: inline-block;
+    background: var(--teal);
+    color: #fff;
+    padding: 12px 32px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .success-card a:hover { background: var(--teal-dark); }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 24px;
+    border-top: 1px solid var(--slate);
+    font-size: 11px;
+    color: var(--gray);
+  }
+  footer a { color: var(--teal); text-decoration: none; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 640px) {
+    .field-row, .checkbox-grid { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 36px; }
+    nav { padding: 16px 20px; }
+    .form-wrap { padding: 24px 20px 60px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-brand">
+    <img src="data:image/png;base64,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" alt="COTR.ai"/>
+    <div class="divider"></div>
+    <div class="name">Team<span>IQ</span></div>
+  </a>
+  <a href="pilot.html" class="cta">Learn About Pilot →</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="eyebrow">Partner Intake</div>
+  <h1>Get your company <span>scored</span></h1>
+  <p>Submit your profile — certifications, NAICS codes, past performance, and teaming interests — and we'll score you against every active federal opportunity in the pipeline.</p>
+</div>
+
+<!-- FORM -->
+<div class="form-wrap">
+  <form id="intakeForm" action="https://formspree.io/f/xpznqwje" method="POST">
+
+    <!-- Section 1: Company Profile -->
+    <div class="form-section">
+      <div class="form-section-header">
+        <div class="form-section-num">1</div>
+        <div class="form-section-title">Company Profile</div>
+      </div>
+      <div class="field">
+        <label>Company Name <span class="req">*</span></label>
+        <input type="text" name="company_name" required placeholder="e.g. Apex Federal Solutions, LLC">
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label>Primary Contact Name <span class="req">*</span></label>
+          <input type="text" name="contact_name" required placeholder="Full name">
+        </div>
+        <div class="field">
+          <label>Title</label>
+          <input type="text" name="contact_title" placeholder="e.g. VP of Business Development">
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label>Email <span class="req">*</span></label>
+          <input type="email" name="email" required placeholder="you@company.com">
+        </div>
+        <div class="field">
+          <label>Phone</label>
+          <input type="tel" name="phone" placeholder="(555) 123-4567">
+        </div>
+      </div>
+      <div class="field">
+        <label>Company Website</label>
+        <input type="url" name="website" placeholder="https://www.company.com">
+      </div>
+      <div class="field">
+        <label>Company Size</label>
+        <select name="company_size">
+          <option value="">Select...</option>
+          <option value="1-10">1–10 employees</option>
+          <option value="11-50">11–50 employees</option>
+          <option value="51-200">51–200 employees</option>
+          <option value="201-500">201–500 employees</option>
+          <option value="500+">500+ employees</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Section 2: Business Type -->
+    <div class="form-section">
+      <div class="form-section-header">
+        <div class="form-section-num">2</div>
+        <div class="form-section-title">Business Classification</div>
+      </div>
+      <div class="field">
+        <label>Are you a Small Business or Large Business? <span class="req">*</span></label>
+        <select name="business_type" required>
+          <option value="">Select...</option>
+          <option value="Small Business">Small Business</option>
+          <option value="Large Business">Large Business</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Section 3: Certifications -->
+    <div class="form-section">
+      <div class="form-section-header">
+        <div class="form-section-num">3</div>
+        <div class="form-section-title">Set-Aside Certifications</div>
+      </div>
+      <div class="field">
+        <label>Select all certifications held (check all that apply)</label>
+        <div class="checkbox-grid" id="certGrid">
+          <label class="checkbox-item" onclick="this.classList.toggle('checked')">
+            <input type="checkbox" name="certs" value="8(a)">
+            <div class="check-box"></div>
+            <span class="check-label">8(a)</span>
+          </label>
+          <label class="checkbox-item" onclick="this.classList.toggle('checked')">
+            <input type="checkbox" name="certs" value="Tribal 8(a)">
+            <div class="check-box"></div>
+            <span class="check-label">Tribal 8(a)</span>
+          </label>
+          <label class="checkbox-item" onclick="this.classList.toggle('checked')">
+            <input type="checkbox" name="certs" value="SDVOSB">
+            <div class="check-box"></div>
+            <span class="check-label">SDVOSB</span>
+          </label>
+          <label class="checkbox-item" onclick="this.classList.toggle('checked')">
+            <input type="checkbox" name="certs" value="HUBZone">
+            <div class="check-box"></div>
+            <span class="check-label">HUBZone</span>
+          </label>
+          <label class="checkbox-item" onclick="this.classList.toggle('checked')">
+            <input type="checkbox" name="certs" value="WOSB">
+            <div class="check-box"></div>
+            <span class="check-label">WOSB</span>
+          </label>
+          <label class="checkbox-item" onclick="this.classList.toggle('checked')">
+            <input type="checkbox" name="certs" value="EDWOSB">
+            <div class="check-box"></div>
+            <span class="check-label">EDWOSB</span>
+          </label>
+          <label class="checkbox-item" onclick="this.classList.toggle('checked')">
+            <input type="checkbox" name="certs" value="Mentor-Protege">
+            <div class="check-box"></div>
+            <span class="check-label">Mentor-Protege</span>
+          </label>
+          <label class="checkbox-item" onclick="this.classList.toggle('checked')">
+            <input type="checkbox" name="certs" value="None / Large Business">
+            <div class="check-box"></div>
+            <span class="check-label">None / LB</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 4: NAICS Codes -->
+    <div class="form-section">
+      <div class="form-section-header">
+        <div class="form-section-num">4</div>
+        <div class="form-section-title">NAICS Codes</div>
+      </div>
+      <div class="field">
+        <label>Add your registered NAICS codes</label>
+        <div class="naics-input-wrap">
+          <input type="text" id="naicsInput" placeholder="e.g. 541330" maxlength="6">
+          <button type="button" class="naics-add-btn" onclick="addNaics()">+ Add</button>
+        </div>
+        <div class="naics-tags" id="naicsTags"></div>
+        <input type="hidden" name="naics_codes" id="naicsHidden">
+      </div>
+    </div>
+
+    <!-- Section 5: Geographic Reach -->
+    <div class="form-section">
+      <div class="form-section-header">
+        <div class="form-section-num">5</div>
+        <div class="form-section-title">Geographic Reach</div>
+      </div>
+      <div class="field">
+        <label>Headquarters Location</label>
+        <input type="text" name="hq_location" placeholder="e.g. Mobile, AL">
+      </div>
+      <div class="field">
+        <label>Geographic Service Area</label>
+        <select name="geo_reach">
+          <option value="">Select...</option>
+          <option value="Local (single state)">Local (single state)</option>
+          <option value="Regional (multi-state)">Regional (multi-state)</option>
+          <option value="National">National</option>
+          <option value="International">International</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Office Locations / States Served</label>
+        <input type="text" name="states_served" placeholder="e.g. AL, FL, GA, MS, TN">
+      </div>
+    </div>
+
+    <!-- Section 6: Past Performance -->
+    <div class="form-section">
+      <div class="form-section-header">
+        <div class="form-section-num">6</div>
+        <div class="form-section-title">Past Performance</div>
+      </div>
+      <div class="field">
+        <label>Relevant Federal Contract History</label>
+        <textarea name="past_performance" placeholder="Briefly describe 2-3 relevant contracts: agency, scope, contract value, and CPARS rating if available."></textarea>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label>Bonding Capacity</label>
+          <input type="text" name="bonding_capacity" placeholder="e.g. $5M single / $15M aggregate">
+        </div>
+        <div class="field">
+          <label>Security Clearances Held</label>
+          <input type="text" name="clearances" placeholder="e.g. Secret, Top Secret, None">
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 7: Teaming Interests -->
+    <div class="form-section">
+      <div class="form-section-header">
+        <div class="form-section-num">7</div>
+        <div class="form-section-title">Teaming Interests</div>
+      </div>
+      <div class="field">
+        <label>Existing JV or Teaming Arrangements</label>
+        <textarea name="existing_teaming" placeholder="Describe any existing joint ventures, mentor-protege relationships, or teaming agreements."></textarea>
+      </div>
+      <div class="field">
+        <label>What do you need most from a teaming partner?</label>
+        <textarea name="partner_needs" placeholder="e.g. Prime contract vehicles, technical depth in environmental remediation, cleared personnel, bonding capacity..."></textarea>
+      </div>
+    </div>
+
+    <!-- Section 8: Additional -->
+    <div class="form-section">
+      <div class="form-section-header">
+        <div class="form-section-num">8</div>
+        <div class="form-section-title">Anything Else</div>
+      </div>
+      <div class="field">
+        <label>Additional Notes or Questions</label>
+        <textarea name="additional_notes" placeholder="Anything else you'd like us to know?"></textarea>
+      </div>
+    </div>
+
+    <!-- Submit -->
+    <div class="submit-section">
+      <button type="submit" class="submit-btn">Submit Profile →</button>
+      <div class="submit-note">Your data is used exclusively for TeamIQ scoring and will not be shared with third parties.</div>
+    </div>
+  </form>
+</div>
+
+<!-- Success Overlay -->
+<div class="success-overlay" id="successOverlay">
+  <div class="success-card">
+    <div class="s-icon">✅</div>
+    <h2>Profile Submitted</h2>
+    <p>Your intake has been received. We'll process your profile through the TeamIQ scoring engine and reach out within 48 hours with next steps.</p>
+    <a href="index.html">Back to TeamIQ →</a>
+  </div>
+</div>
+
+<footer>
+  &copy; 2026 <a href="https://cotr.ai">COTR.ai</a> &bull; Federal Teaming Intelligence &bull; <a href="mailto:chris@cotr.ai">chris@cotr.ai</a>
+</footer>
+
+<script>
+// NAICS tag management
+const naicsCodes = [];
+
+function addNaics() {
+  const input = document.getElementById('naicsInput');
+  const code = input.value.trim();
+  if (!code || naicsCodes.includes(code)) { input.value = ''; return; }
+  if (!/^\d{2,6}$/.test(code)) { input.value = ''; return; }
+
+  naicsCodes.push(code);
+  input.value = '';
+  renderNaics();
+}
+
+document.getElementById('naicsInput').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') { e.preventDefault(); addNaics(); }
+});
+
+function removeNaics(code) {
+  const idx = naicsCodes.indexOf(code);
+  if (idx > -1) naicsCodes.splice(idx, 1);
+  renderNaics();
+}
+
+function renderNaics() {
+  const container = document.getElementById('naicsTags');
+  const hidden = document.getElementById('naicsHidden');
+  container.innerHTML = naicsCodes.map(c =>
+    `<span class="naics-tag">${c}<span class="remove" onclick="removeNaics('${c}')">&times;</span></span>`
+  ).join('');
+  hidden.value = naicsCodes.join(', ');
+}
+
+// Form submission
+document.getElementById('intakeForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  const formData = new FormData(this);
+
+  // Collect checked certifications
+  const certs = [];
+  document.querySelectorAll('#certGrid input[type="checkbox"]').forEach(cb => {
+    if (cb.closest('.checkbox-item').classList.contains('checked')) {
+      certs.push(cb.value);
+    }
+  });
+  formData.set('certs', certs.join(', '));
+
+  fetch(this.action, {
+    method: 'POST',
+    body: formData,
+    headers: { 'Accept': 'application/json' }
+  }).then(response => {
+    if (response.ok) {
+      document.getElementById('successOverlay').classList.add('show');
+    } else {
+      alert('Something went wrong. Please try again or email chris@cotr.ai directly.');
+    }
+  }).catch(() => {
+    alert('Network error. Please try again or email chris@cotr.ai directly.');
+  });
+});
+</script>
+
+</body>
+</html>
