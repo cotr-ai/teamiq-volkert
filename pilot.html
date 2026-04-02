@@ -289,60 +289,319 @@
     padding: 0 24px 20px;
   }
 
-  /* ── CTA BANNER ── */
-  .cta-banner {
-    text-align: center;
-    padding: 80px 40px;
-    position: relative;
+  /* ── FORM CONTAINER ── */
+  .form-wrap {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 40px 40px 80px;
   }
-  .cta-banner::before {
-    content: '';
-    position: absolute;
-    bottom: 0; left: 50%;
-    transform: translateX(-50%);
-    width: 600px; height: 400px;
-    background: radial-gradient(circle, rgba(13,148,136,0.06) 0%, transparent 70%);
-    pointer-events: none;
+
+  /* ── FORM SECTIONS ── */
+  .form-section {
+    margin-bottom: 40px;
   }
-  .cta-banner h2 {
-    font-size: 36px;
-    font-weight: 900;
-    letter-spacing: -1px;
-    margin-bottom: 12px;
+  .form-section-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--slate);
   }
-  .cta-banner h2 span { color: var(--teal); }
-  .cta-banner p {
-    font-size: 15px;
+  .form-section-num {
+    width: 28px;
+    height: 28px;
+    background: var(--teal);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 800;
+    color: #fff;
+    flex-shrink: 0;
+  }
+  .form-section-title {
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  /* ── FORM ELEMENTS ── */
+  .field {
+    margin-bottom: 16px;
+  }
+  .field label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
     color: var(--gray-light);
-    max-width: 480px;
-    margin: 0 auto 32px;
-    line-height: 1.7;
+    margin-bottom: 6px;
+    letter-spacing: 0.3px;
   }
-  .cta-banner .btn-primary {
+  .field label .req {
+    color: var(--orange);
+    margin-left: 2px;
+  }
+  .field input[type="text"],
+  .field input[type="email"],
+  .field input[type="tel"],
+  .field input[type="url"],
+  .field textarea,
+  .field select {
+    width: 100%;
+    padding: 12px 14px;
+    background: var(--navy);
+    border: 1.5px solid var(--slate);
+    border-radius: 8px;
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    transition: border-color 0.2s;
+    outline: none;
+  }
+  .field input:focus,
+  .field textarea:focus,
+  .field select:focus {
+    border-color: var(--teal);
+    box-shadow: 0 0 0 3px rgba(13,148,136,0.15);
+  }
+  .field input::placeholder,
+  .field textarea::placeholder {
+    color: var(--slate-light);
+  }
+  .field textarea {
+    min-height: 100px;
+    resize: vertical;
+    line-height: 1.6;
+  }
+  .field select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%2394A3B8'%3E%3Cpath d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 36px;
+  }
+  .field select option {
+    background: var(--navy);
+    color: var(--white);
+  }
+  .field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  /* ── CHECKBOXES ── */
+  .checkbox-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    background: var(--navy);
+    border: 1.5px solid var(--slate);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    user-select: none;
+  }
+  .checkbox-item:hover {
+    border-color: var(--slate-light);
+    background: var(--navy-light);
+  }
+  .checkbox-item.checked {
+    border-color: var(--teal);
+    background: rgba(13,148,136,0.1);
+  }
+  .checkbox-item input[type="checkbox"] {
+    display: none;
+  }
+  .check-box {
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--slate-light);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.2s;
+  }
+  .checkbox-item.checked .check-box {
+    background: var(--teal);
+    border-color: var(--teal);
+  }
+  .check-box::after {
+    content: '';
+    width: 10px;
+    height: 6px;
+    border-left: 2px solid #fff;
+    border-bottom: 2px solid #fff;
+    transform: rotate(-45deg) translateY(-1px);
+    opacity: 0;
+    transition: opacity 0.15s;
+  }
+  .checkbox-item.checked .check-box::after {
+    opacity: 1;
+  }
+  .check-label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--gray-light);
+  }
+  .checkbox-item.checked .check-label {
+    color: var(--teal-light);
+  }
+
+  /* ── NAICS TAGS ── */
+  .naics-input-wrap {
+    display: flex;
+    gap: 8px;
+  }
+  .naics-input-wrap input {
+    flex: 1;
+  }
+  .naics-add-btn {
+    background: var(--teal);
+    color: #fff;
+    border: none;
+    padding: 12px 18px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .naics-add-btn:hover { background: var(--teal-dark); }
+  .naics-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 8px;
+    min-height: 24px;
+  }
+  .naics-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(13,148,136,0.15);
+    border: 1px solid rgba(13,148,136,0.3);
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 12px;
+    color: var(--teal-light);
+    font-weight: 600;
+  }
+  .naics-tag .remove {
+    cursor: pointer;
+    font-size: 14px;
+    color: var(--gray);
+    transition: color 0.2s;
+    line-height: 1;
+  }
+  .naics-tag .remove:hover { color: var(--red); }
+
+  /* ── SUBMIT ── */
+  .submit-section {
+    text-align: center;
+    padding: 40px 0 20px;
+    border-top: 1px solid var(--slate);
+  }
+  .submit-btn {
     display: inline-block;
     background: var(--teal);
     color: #fff;
-    padding: 14px 36px;
+    padding: 16px 48px;
+    border: none;
     border-radius: 10px;
-    font-size: 15px;
+    font-size: 16px;
+    font-weight: 700;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.5px;
+  }
+  .submit-btn:hover { background: var(--teal-dark); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(13,148,136,0.2); }
+  .submit-note {
+    font-size: 12px;
+    color: var(--gray);
+    margin-top: 12px;
+    line-height: 1.5;
+  }
+
+  /* ── SUCCESS OVERLAY ── */
+  .success-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(11,17,32,0.92);
+    z-index: 500;
+    align-items: center;
+    justify-content: center;
+  }
+  .success-overlay.show {
+    display: flex;
+  }
+  .success-card {
+    background: var(--navy);
+    border: 2px solid var(--teal);
+    border-radius: 16px;
+    padding: 48px;
+    text-align: center;
+    max-width: 440px;
+    box-shadow: 0 24px 64px rgba(0,0,0,0.5);
+  }
+  .success-card .s-icon { font-size: 48px; margin-bottom: 16px; }
+  .success-card h2 {
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 12px;
+  }
+  .success-card p {
+    font-size: 14px;
+    color: var(--gray-light);
+    line-height: 1.7;
+    margin-bottom: 28px;
+  }
+  .success-card a {
+    display: inline-block;
+    background: var(--teal);
+    color: #fff;
+    padding: 12px 32px;
+    border-radius: 8px;
+    font-size: 14px;
     font-weight: 700;
     text-decoration: none;
     transition: all 0.2s;
-    margin-right: 12px;
   }
-  .cta-banner .btn-primary:hover { background: var(--teal-dark); transform: translateY(-2px); }
-  .cta-banner .btn-secondary {
-    display: inline-block;
-    border: 1.5px solid var(--slate);
+  .success-card a:hover { background: var(--teal-dark); }
+
+  /* ── CTA BANNER ── */
+  .cta-banner {
+    text-align: center;
+    padding: 40px 40px 20px;
+    position: relative;
+  }
+  .cta-banner h2 {
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    margin-bottom: 8px;
+  }
+  .cta-banner h2 span { color: var(--teal); }
+  .cta-banner p {
+    font-size: 14px;
     color: var(--gray-light);
-    padding: 13px 32px;
-    border-radius: 10px;
-    font-size: 15px;
-    font-weight: 600;
-    text-decoration: none;
-    transition: all 0.2s;
+    max-width: 480px;
+    margin: 0 auto;
+    line-height: 1.7;
   }
-  .cta-banner .btn-secondary:hover { border-color: var(--teal); color: var(--teal-light); }
 
   /* ── FOOTER ── */
   footer {
@@ -361,6 +620,14 @@
     border: none;
     border-top: 1px solid var(--slate);
   }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 640px) {
+    .field-row, .checkbox-grid { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 36px; }
+    nav { padding: 16px 20px; }
+    .form-wrap { padding: 24px 20px 60px; }
+  }
 </style>
 </head>
 <body>
@@ -371,7 +638,7 @@
     <div class="divider"></div>
     <div class="name">Team<span>IQ</span></div>
   </a>
-  <a href="mailto:chris@cotr.ai?subject=TeamIQ%20Pilot%20Inquiry&body=I'd%20like%20to%20learn%20more%20about%20the%20TeamIQ%20paid%20pilot." class="cta">Start a Pilot →</a>
+  <a href="#pilotForm" class="cta" onclick="document.getElementById('pilotForm').scrollIntoView({behavior:'smooth'});return false;">Start a Pilot →</a>
 </nav>
 
 <!-- HERO -->
@@ -523,17 +790,311 @@
   </div>
 </div>
 
-<!-- CTA -->
+<!-- CTA INTRO -->
 <div class="cta-banner">
   <h2>Ready to see your <span>pipeline scored</span>?</h2>
-  <p>Start with a focused pilot — one client, full scoring, actionable results in 2 weeks. No long-term commitment required.</p>
-  <a href="mailto:chris@cotr.ai?subject=TeamIQ%20Pilot%20Inquiry&body=I'd%20like%20to%20learn%20more%20about%20the%20TeamIQ%20paid%20pilot.%0A%0ACompany%20Name%3A%20%0AContact%20Name%3A%20%0APhone%3A%20%0A%0ABriefly%20describe%20your%20federal%20contracting%20goals%3A%0A" class="btn-primary">Start a Pilot →</a>
-  <a href="index.html" class="btn-secondary">← Back to TeamIQ</a>
+  <p>Fill out the form below to start your pilot. One client, full scoring, actionable results in 2 weeks.</p>
+</div>
+
+<!-- INTAKE FORM -->
+<div class="form-wrap">
+  <form id="pilotForm" action="https://formspree.io/f/xpznqwje" method="POST">
+    <input type="hidden" name="_form_type" value="Paid Pilot Inquiry">
+
+    <!-- Section 1: Company Profile -->
+    <div class="form-section">
+      <div class="form-section-header">
+        <div class="form-section-num">1</div>
+        <div class="form-section-title">Company Profile</div>
+      </div>
+      <div class="field">
+        <label>Company Name <span class="req">*</span></label>
+        <input type="text" name="company_name" required placeholder="e.g. Apex Federal Solutions, LLC">
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label>Primary Contact Name <span class="req">*</span></label>
+          <input type="text" name="contact_name" required placeholder="Full name">
+        </div>
+        <div class="field">
+          <label>Title</label>
+          <input type="text" name="contact_title" placeholder="e.g. VP of Business Development">
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label>Email <span class="req">*</span></label>
+          <input type="email" name="email" required placeholder="you@company.com">
+        </div>
+        <div class="field">
+          <label>Phone</label>
+          <input type="tel" name="phone" placeholder="(555) 123-4567">
+        </div>
+      </div>
+      <div class="field">
+        <label>Company Website</label>
+        <input type="url" name="website" placeholder="https://www.company.com">
+      </div>
+      <div class="field">
+        <label>Company Size</label>
+        <select name="company_size">
+          <option value="">Select...</option>
+          <option value="1-10">1-10 employees</option>
+          <option value="11-50">11-50 employees</option>
+          <option value="51-200">51-200 employees</option>
+          <option value="201-500">201-500 employees</option>
+          <option value="500+">500+ employees</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Section 2: Business Type -->
+    <div class="form-section">
+      <div class="form-section-header">
+        <div class="form-section-num">2</div>
+        <div class="form-section-title">Business Classification</div>
+      </div>
+      <div class="field">
+        <label>Are you a Small Business or Large Business? <span class="req">*</span></label>
+        <select name="business_type" required>
+          <option value="">Select...</option>
+          <option value="Small Business">Small Business</option>
+          <option value="Large Business">Large Business</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Section 3: Certifications -->
+    <div class="form-section">
+      <div class="form-section-header">
+        <div class="form-section-num">3</div>
+        <div class="form-section-title">Set-Aside Certifications</div>
+      </div>
+      <div class="field">
+        <label>Select all certifications held (check all that apply)</label>
+        <div class="checkbox-grid" id="certGrid">
+          <label class="checkbox-item" onclick="this.classList.toggle('checked')">
+            <input type="checkbox" name="certs" value="8(a)">
+            <div class="check-box"></div>
+            <span class="check-label">8(a)</span>
+          </label>
+          <label class="checkbox-item" onclick="this.classList.toggle('checked')">
+            <input type="checkbox" name="certs" value="Tribal 8(a)">
+            <div class="check-box"></div>
+            <span class="check-label">Tribal 8(a)</span>
+          </label>
+          <label class="checkbox-item" onclick="this.classList.toggle('checked')">
+            <input type="checkbox" name="certs" value="SDVOSB">
+            <div class="check-box"></div>
+            <span class="check-label">SDVOSB</span>
+          </label>
+          <label class="checkbox-item" onclick="this.classList.toggle('checked')">
+            <input type="checkbox" name="certs" value="HUBZone">
+            <div class="check-box"></div>
+            <span class="check-label">HUBZone</span>
+          </label>
+          <label class="checkbox-item" onclick="this.classList.toggle('checked')">
+            <input type="checkbox" name="certs" value="WOSB">
+            <div class="check-box"></div>
+            <span class="check-label">WOSB</span>
+          </label>
+          <label class="checkbox-item" onclick="this.classList.toggle('checked')">
+            <input type="checkbox" name="certs" value="EDWOSB">
+            <div class="check-box"></div>
+            <span class="check-label">EDWOSB</span>
+          </label>
+          <label class="checkbox-item" onclick="this.classList.toggle('checked')">
+            <input type="checkbox" name="certs" value="Mentor-Protege">
+            <div class="check-box"></div>
+            <span class="check-label">Mentor-Protege</span>
+          </label>
+          <label class="checkbox-item" onclick="this.classList.toggle('checked')">
+            <input type="checkbox" name="certs" value="None / Large Business">
+            <div class="check-box"></div>
+            <span class="check-label">None / LB</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 4: NAICS Codes -->
+    <div class="form-section">
+      <div class="form-section-header">
+        <div class="form-section-num">4</div>
+        <div class="form-section-title">NAICS Codes</div>
+      </div>
+      <div class="field">
+        <label>Add your registered NAICS codes</label>
+        <div class="naics-input-wrap">
+          <input type="text" id="naicsInput" placeholder="e.g. 541330" maxlength="6">
+          <button type="button" class="naics-add-btn" onclick="addNaics()">+ Add</button>
+        </div>
+        <div class="naics-tags" id="naicsTags"></div>
+        <input type="hidden" name="naics_codes" id="naicsHidden">
+      </div>
+    </div>
+
+    <!-- Section 5: Geographic Reach -->
+    <div class="form-section">
+      <div class="form-section-header">
+        <div class="form-section-num">5</div>
+        <div class="form-section-title">Geographic Reach</div>
+      </div>
+      <div class="field">
+        <label>Headquarters Location</label>
+        <input type="text" name="hq_location" placeholder="e.g. Mobile, AL">
+      </div>
+      <div class="field">
+        <label>Geographic Service Area</label>
+        <select name="geo_reach">
+          <option value="">Select...</option>
+          <option value="Local (single state)">Local (single state)</option>
+          <option value="Regional (multi-state)">Regional (multi-state)</option>
+          <option value="National">National</option>
+          <option value="International">International</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Office Locations / States Served</label>
+        <input type="text" name="states_served" placeholder="e.g. AL, FL, GA, MS, TN">
+      </div>
+    </div>
+
+    <!-- Section 6: Past Performance -->
+    <div class="form-section">
+      <div class="form-section-header">
+        <div class="form-section-num">6</div>
+        <div class="form-section-title">Past Performance</div>
+      </div>
+      <div class="field">
+        <label>Relevant Federal Contract History</label>
+        <textarea name="past_performance" placeholder="Briefly describe 2-3 relevant contracts: agency, scope, contract value, and CPARS rating if available."></textarea>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label>Bonding Capacity</label>
+          <input type="text" name="bonding_capacity" placeholder="e.g. $5M single / $15M aggregate">
+        </div>
+        <div class="field">
+          <label>Security Clearances Held</label>
+          <input type="text" name="clearances" placeholder="e.g. Secret, Top Secret, None">
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 7: Teaming Interests -->
+    <div class="form-section">
+      <div class="form-section-header">
+        <div class="form-section-num">7</div>
+        <div class="form-section-title">Teaming Interests</div>
+      </div>
+      <div class="field">
+        <label>Existing JV or Teaming Arrangements</label>
+        <textarea name="existing_teaming" placeholder="Describe any existing joint ventures, mentor-protege relationships, or teaming agreements."></textarea>
+      </div>
+      <div class="field">
+        <label>What do you need most from a teaming partner?</label>
+        <textarea name="partner_needs" placeholder="e.g. Prime contract vehicles, technical depth in environmental remediation, cleared personnel, bonding capacity..."></textarea>
+      </div>
+    </div>
+
+    <!-- Section 8: Additional -->
+    <div class="form-section">
+      <div class="form-section-header">
+        <div class="form-section-num">8</div>
+        <div class="form-section-title">Anything Else</div>
+      </div>
+      <div class="field">
+        <label>Additional Notes or Questions</label>
+        <textarea name="additional_notes" placeholder="Anything else you'd like us to know about your pilot goals?"></textarea>
+      </div>
+    </div>
+
+    <!-- Submit -->
+    <div class="submit-section">
+      <button type="submit" class="submit-btn">Start My Pilot →</button>
+      <div class="submit-note">Your data is used exclusively for TeamIQ scoring and will not be shared with third parties.</div>
+    </div>
+  </form>
+</div>
+
+<!-- Success Overlay -->
+<div class="success-overlay" id="successOverlay">
+  <div class="success-card">
+    <div class="s-icon">✅</div>
+    <h2>Pilot Request Received</h2>
+    <p>We've got your information. The COTR.ai team will reach out within 48 hours to kick off your 2-week pilot engagement.</p>
+    <a href="index.html">Back to TeamIQ →</a>
+  </div>
 </div>
 
 <footer>
   &copy; 2026 <a href="https://cotr.ai">COTR.ai</a> &bull; Federal Teaming Intelligence &bull; <a href="mailto:chris@cotr.ai">chris@cotr.ai</a>
 </footer>
 
+<script>
+// NAICS tag management
+const naicsCodes = [];
+
+function addNaics() {
+  const input = document.getElementById('naicsInput');
+  const code = input.value.trim();
+  if (!code || naicsCodes.includes(code)) { input.value = ''; return; }
+  if (!/^\d{2,6}$/.test(code)) { input.value = ''; return; }
+
+  naicsCodes.push(code);
+  input.value = '';
+  renderNaics();
+}
+
+document.getElementById('naicsInput').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') { e.preventDefault(); addNaics(); }
+});
+
+function removeNaics(code) {
+  const idx = naicsCodes.indexOf(code);
+  if (idx > -1) naicsCodes.splice(idx, 1);
+  renderNaics();
+}
+
+function renderNaics() {
+  const container = document.getElementById('naicsTags');
+  const hidden = document.getElementById('naicsHidden');
+  container.innerHTML = naicsCodes.map(c =>
+    `<span class="naics-tag">${c}<span class="remove" onclick="removeNaics('${c}')">&times;</span></span>`
+  ).join('');
+  hidden.value = naicsCodes.join(', ');
+}
+
+// Form submission
+document.getElementById('pilotForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  const formData = new FormData(this);
+
+  // Collect checked certifications
+  const certs = [];
+  document.querySelectorAll('#certGrid input[type="checkbox"]').forEach(cb => {
+    if (cb.closest('.checkbox-item').classList.contains('checked')) {
+      certs.push(cb.value);
+    }
+  });
+  formData.set('certs', certs.join(', '));
+
+  fetch(this.action, {
+    method: 'POST',
+    body: formData,
+    headers: { 'Accept': 'application/json' }
+  }).then(response => {
+    if (response.ok) {
+      document.getElementById('successOverlay').classList.add('show');
+    } else {
+      alert('Something went wrong. Please try again or email chris@cotr.ai directly.');
+    }
+  }).catch(() => {
+    alert('Network error. Please try again or email chris@cotr.ai directly.');
+  });
+});
+</script>
 </body>
 </html>
