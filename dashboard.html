@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TeamIQ — Federal Teaming Intelligence | COTR.ai</title>
-<meta name="description" content="TeamIQ by COTR.ai — Federal Set-Aside Teaming Intelligence Platform. 8-factor weighted scoring for SB + LB + Opportunity triad matching.">
+<meta name="description" content="TeamIQ by COTR.ai — Federal Set-Aside Teaming Intelligence Platform. Multi-factor scoring for SB + LB + Opportunity triad matching.">
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 
@@ -521,7 +521,7 @@
 <!-- Hero -->
 <div class="hero">
   <h1>Federal Teaming <span>Intelligence</span></h1>
-  <div class="subtitle">8-factor weighted scoring across every Small Business + Large Business + Opportunity combination — powered by COTR.ai</div>
+  <div class="subtitle">Multi-factor scoring across every Small Business + Large Business + Opportunity combination — powered by COTR.ai</div>
   <div class="dodaf">Click any node to explore &bull; Hover scoring factors for detail</div>
 </div>
 
@@ -658,7 +658,7 @@
   <div class="node engine" style="left: 440px; top: 210px; width: 180px; height: 155px;" data-panel="engine">
     <div class="icon">⚙️</div>
     <div class="label">TeamIQ Engine</div>
-    <div class="desc" style="margin-top: 8px;">8-Factor Weighted<br/>Scoring Model<br/><br/>SB + LB + Opportunity<br/>Triad Matching</div>
+    <div class="desc" style="margin-top: 8px;">Proprietary Multi-Factor<br/>Scoring Model<br/><br/>SB + LB + Opportunity<br/>Triad Matching</div>
   </div>
 
   <div class="node output" style="left: 740px; top: 95px; width: 170px;" data-panel="scout">
@@ -670,7 +670,7 @@
   <div class="node output" style="left: 740px; top: 235px; width: 170px;" data-panel="scores">
     <div class="icon">🎯</div>
     <div class="label">Teaming Match Scores</div>
-    <div class="desc">Ranked SB-LB pairings per opportunity — 0-100 composite score with factor breakdown</div>
+    <div class="desc">Ranked SB-LB pairings per opportunity — composite score with factor breakdown</div>
   </div>
 
   <div class="node output" style="left: 740px; top: 370px; width: 170px;" data-panel="gaps">
@@ -692,29 +692,29 @@
 
   <!-- Scoring factor chips with tooltips -->
   <div class="factors" style="left: 425px; top: 375px;">
-    <span class="factor">SA Eligibility 25%
-      <div class="tooltip"><div class="tt-title">Set-Aside Eligibility (25%)</div>Does the SB hold the required certification for this opportunity's set-aside type? 8(a), SDVOSB, HUBZone, WOSB — exact match scores highest.</div>
+    <span class="factor">Set-Aside Eligibility
+      <div class="tooltip"><div class="tt-title">Set-Aside Eligibility</div>Evaluates certification alignment between the SB and the opportunity's set-aside requirements.</div>
     </span>
-    <span class="factor">NAICS Align 20%
-      <div class="tooltip"><div class="tt-title">NAICS Alignment (20%)</div>How closely do the SB's registered NAICS codes match the opportunity's primary NAICS? Direct match vs. adjacent code scoring.</div>
+    <span class="factor">NAICS Alignment
+      <div class="tooltip"><div class="tt-title">NAICS Alignment</div>Measures how closely the SB's registered NAICS codes match the opportunity's requirements.</div>
     </span>
-    <span class="factor">Geo Proximity 15%
-      <div class="tooltip"><div class="tt-title">Geographic Proximity (15%)</div>Physical distance between the SB and the work site. Closer proximity = lower mobilization cost, stronger local presence story.</div>
+    <span class="factor">Geographic Proximity
+      <div class="tooltip"><div class="tt-title">Geographic Proximity</div>Assesses proximity between the partner and the work site location.</div>
     </span>
-    <span class="factor">Past Perf 15%
-      <div class="tooltip"><div class="tt-title">Past Performance (15%)</div>Relevant contract history on similar scope, scale, and agency. CPARS ratings and recency weighted.</div>
+    <span class="factor">Past Performance
+      <div class="tooltip"><div class="tt-title">Past Performance</div>Evaluates relevant federal contract history on similar scope and scale.</div>
     </span>
-    <span class="factor">Partner Cap 10%
-      <div class="tooltip"><div class="tt-title">Partner Capability (10%)</div>Does the LB bring the technical depth, clearances, bonding capacity, or equipment the SB lacks?</div>
+    <span class="factor">Partner Capability
+      <div class="tooltip"><div class="tt-title">Partner Capability</div>Assesses the complementary strengths each partner brings to the teaming arrangement.</div>
     </span>
-    <span class="factor">Vehicle Access 5%
-      <div class="tooltip"><div class="tt-title">Vehicle Access (5%)</div>Does either partner hold an existing IDIQ, MATOC, or BPA that could be leveraged for task order competition?</div>
+    <span class="factor">Vehicle Access
+      <div class="tooltip"><div class="tt-title">Vehicle Access</div>Determines whether existing contract vehicles can be leveraged for the opportunity.</div>
     </span>
-    <span class="factor">Sole-Source 5%
-      <div class="tooltip"><div class="tt-title">Sole-Source Eligible (5%)</div>Can this opportunity be pursued as a sole-source award through Tribal 8(a), directed SB set-aside, or other non-competitive pathways?</div>
+    <span class="factor">Sole-Source Eligible
+      <div class="tooltip"><div class="tt-title">Sole-Source Eligible</div>Identifies non-competitive award pathways available for the opportunity.</div>
     </span>
-    <span class="factor">Team Ready 5%
-      <div class="tooltip"><div class="tt-title">Teaming Readiness (5%)</div>Do the partners have an existing relationship, teaming agreement, mentor-protege arrangement, or JV in place?</div>
+    <span class="factor">Teaming Readiness
+      <div class="tooltip"><div class="tt-title">Teaming Readiness</div>Evaluates the maturity of the teaming relationship between partners.</div>
     </span>
   </div>
 
@@ -798,9 +798,9 @@ const panels = {
   },
   "engine": {
     icon: "⚙️", title: "TeamIQ Scoring Engine",
-    subtitle: "The core of the platform — an 8-factor weighted scoring model that evaluates every possible SB + LB + Opportunity triad to surface the highest-value teaming combinations.",
+    subtitle: "The core of the platform — a proprietary scoring model that evaluates every possible SB + LB + Opportunity triad to surface the highest-value teaming combinations.",
     sections: [
-      { heading: "How It Works", text: "For each opportunity in the pipeline, the engine scores every potential SB-LB pairing across 8 weighted factors. The composite score (0-100) determines teaming priority, and the factor breakdown reveals exactly where each pairing is strong or has gaps to close." }
+      { heading: "How It Works", text: "For each opportunity in the pipeline, the engine scores every potential SB-LB pairing across multiple proprietary factors. The composite score determines teaming priority, and the factor breakdown reveals where each pairing is strong or has gaps to close." }
     ],
     showScoring: true
   },
@@ -808,21 +808,21 @@ const panels = {
     icon: "📑", title: "Scout Brief",
     subtitle: "A client-ready, one-page pipeline diagnostic that distills the engine's analysis into an actionable document — scored opportunities, strengths, capability gaps, and recommended next steps.",
     sections: [
-      { heading: "What's Included", items: ["Executive summary with key pipeline metrics", "Top-scored opportunities with SAM.gov links", "Strength and gap analysis", "Sole-source opportunity callout", "Recommended next steps with priority actions", "8-factor scoring model visual breakdown"] },
+      { heading: "What's Included", items: ["Executive summary with key pipeline metrics", "Top-scored opportunities with SAM.gov links", "Strength and gap analysis", "Sole-source opportunity callout", "Recommended next steps with priority actions", "Scoring model visual summary"] },
       { heading: "Delivery", text: "Formatted as a branded .docx document — professional enough to share directly with partners, BD leads, or executive sponsors." }
     ]
   },
   "scores": {
     icon: "🎯", title: "Teaming Match Scores",
-    subtitle: "Ranked pairings for every combination of SB partner, LB partner, and opportunity — each with a 0-100 composite score and full factor breakdown showing exactly why the match works (or doesn't).",
+    subtitle: "Ranked pairings for every combination of SB partner, LB partner, and opportunity — each with a composite score and factor breakdown showing why the match works (or doesn't).",
     sections: [
-      { heading: "Score Components", items: ["Composite score (weighted average of all 8 factors)", "Individual factor scores with color-coded thresholds", "Rank position within the opportunity's candidate pool", "Confidence indicator based on data completeness", "Delta from top-scoring alternative pairing"] },
-      { heading: "Actionable Insights", text: "A score of 75+ indicates a strong teaming match. Scores between 50-74 identify pairings with addressable gaps. Below 50 flags fundamental misalignment — saving partners from pursuing dead-end teaming arrangements." }
+      { heading: "Score Components", items: ["Composite score across multiple weighted factors", "Individual factor scores with performance indicators", "Rank position within the opportunity's candidate pool", "Confidence indicator based on data completeness"] },
+      { heading: "Actionable Insights", text: "Higher scores indicate stronger teaming matches. Mid-range scores identify pairings with addressable gaps. Low scores flag fundamental misalignment — saving partners from pursuing dead-end teaming arrangements." }
     ]
   },
   "gaps": {
     icon: "🔍", title: "Gap Analysis",
-    subtitle: "For every scored pairing, the engine identifies exactly what's missing and what actions would close the gap — turning a 65-score into an 85.",
+    subtitle: "For every scored pairing, the engine identifies exactly what's missing and what actions would close the gap — turning a mid-range score into a top-tier match.",
     sections: [
       { heading: "Common Gaps Identified", items: ["Missing set-aside certification for target opportunity", "No existing contract vehicle for the procuring agency", "Insufficient past performance on similar scope", "No mentor-protege or JV agreement in place", "Geographic distance from the work site", "Missing security clearances for classified work", "Bonding capacity below contract threshold"] },
       { heading: "Remediation Paths", text: "Each gap comes with a specific remediation action — from initiating a Mentor-Protege Agreement to obtaining a specific NAICS registration to establishing a formal JV entity." }
