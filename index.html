@@ -61,6 +61,9 @@
     transition: all 0.2s;
   }
   nav a.cta:hover { background: var(--teal-dark); }
+  .nav-right { display: flex; align-items: center; gap: 24px; }
+  nav a.nav-back { color: var(--gray-light); font-size: 13px; font-weight: 500; text-decoration: none; transition: color 0.2s; }
+  nav a.nav-back:hover { color: var(--teal-light); }
 
   /* ── HERO ── */
   .hero {
@@ -199,7 +202,10 @@
     <div class="divider"></div>
     <div class="name">Team<span>IQ</span></div>
   </div>
-  <a href="mailto:chris@cotr.ai?subject=TeamIQ%20Assessment%20Request" class="cta">Schedule Assessment →</a>
+  <div class="nav-right">
+    <a href="https://cotr.ai" class="nav-back">← cotr.ai</a>
+    <a href="mailto:chris@cotr.ai?subject=TeamIQ%20Assessment%20Request" class="cta">Schedule Assessment →</a>
+  </div>
 </nav>
 
 <div class="hero">
