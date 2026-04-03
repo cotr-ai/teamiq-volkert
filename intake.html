@@ -423,11 +423,33 @@
   footer a { color: var(--teal); text-decoration: none; }
 
   /* ── RESPONSIVE ── */
-  @media (max-width: 640px) {
+  @media (max-width: 768px) {
+    nav { padding: 12px 16px; }
+    .nav-brand img { height: 28px; }
+    .nav-brand .name { font-size: 15px; }
+    .nav-right { gap: 12px; }
+    nav a.nav-back { font-size: 11px; }
+    nav a.cta { padding: 8px 14px; font-size: 11px; }
+
+    .hero { padding: 48px 20px 32px; }
+    .hero h1 { font-size: 32px; letter-spacing: -1px; }
+    .hero p { font-size: 15px; }
+
     .field-row, .checkbox-grid { grid-template-columns: 1fr; }
-    .hero h1 { font-size: 36px; }
-    nav { padding: 16px 20px; }
     .form-wrap { padding: 24px 20px 60px; }
+
+    .naics-input-wrap { flex-direction: column; }
+    .naics-add-btn { width: 100%; }
+
+    .success-card { padding: 32px 24px; margin: 0 16px; }
+  }
+
+  @media (max-width: 420px) {
+    .hero h1 { font-size: 26px; }
+    .hero p { font-size: 14px; }
+    nav a.cta { padding: 7px 12px; font-size: 10px; }
+    .form-section-title { font-size: 14px; }
+    .submit-btn { padding: 14px 32px; font-size: 14px; }
   }
 </style>
 </head>
